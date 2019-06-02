@@ -1,0 +1,10 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "burning_sides_count=0": { "model": "just_dust:compressor"},
+        "burning_sides_count=1": { "model": "just_dust:compressor"},
+        "burning_sides_count=2": { "model": "just_dust:compressor"},
+        "burning_sides_count=3": { "model": "just_dust:compressor"},
+        "burning_sides_count=4": { "model": "just_dust:compressor"}
+    }
+}

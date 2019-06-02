@@ -1,0 +1,44 @@
+item.death_dust.name=Death Dust
+item.earth_dust.name=Earth Dust
+item.energy_dust.name=Energy Dust
+item.fire_dust.name=Fire Dust
+item.life_dust.name=Life Dust
+item.matter_dust.name=Matter Dust
+item.water_dust.name=Water Dust
+
+item.diamond_dust.name=Diamond Dust
+item.iron_dust.name=Iron Dust
+item.gold_dust.name=Gold Dust
+item.emerald_dust.name=Emerald Dust
+item.obsidian_dust.name=Obsidian Dust
+item.lapis_dust.name=Lapis Dust
+
+
+item.death_dust_compressed.name=Death Dust Compressed
+item.earth_dust_compressed.name=Earth Dust Compressed
+item.energy_dust_compressed.name=Energy Dust Compressed
+item.fire_dust_compressed.name=Fire Dust Compressed
+item.life_dust_compressed.name=Life Dust Compressed
+item.matter_dust_compressed.name=Matter Dust Compressed
+item.water_dust_compressed.name=Water Dust Compressed
+
+item.blade_wheel.name=Blade Wheel
+
+tile.death_dust_block.name=Death Dust Block
+tile.earth_dust_block.name=Earth Dust Block
+tile.energy_dust_block.name=Energy Dust Block
+tile.fire_dust_block.name=Fire Dust Block
+tile.life_dust_block.name=Life Dust Block
+tile.matter_dust_block.name=Matter Dust Block
+tile.water_dust_block.name=Water Dust Block
+
+tile.block_compressor.name=Compressor Tier I
+tile.block_grinder.name=Grinder Tier I
+
+tile.block_compressor_running.name=Compressor Tier I
+tile.block_grinder_running.name=Grinder Tier I
+
+tile.block_cable.name=Cable
+
+container.compressor=Compressor
+container.grinder=Grinder

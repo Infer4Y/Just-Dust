@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "normal": { "model": "just_dust:smartmodel/cablemodel" }
+  }
+}
