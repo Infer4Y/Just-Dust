@@ -2,6 +2,7 @@ package xavier.just_dust.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import xavier.just_dust.items.ItemModelProvider;
@@ -21,8 +22,8 @@ public class ModBlocks {
         register(water_dust_block = new BaseBlocks(Material.SAND, "water_dust_block"));
         register(death_dust_block = new BaseBlocks(Material.SAND, "death_dust_block"));
         register(energy_dust_block = new BaseBlocks(Material.SAND, "energy_dust_block"));
-        register(block_compressor = new BlockCompressor());
-        register(block_grinder = new BlockGrinder());
+        register(block_compressor = (BlockCompressor) new BlockCompressor().setCreativeTab(CreativeTabs.REDSTONE));
+        register(block_grinder = (BlockGrinder) new BlockGrinder().setCreativeTab(CreativeTabs.REDSTONE));
         register(block_cable = new BlockCable(Material.IRON,"block_cable"));
     }
 

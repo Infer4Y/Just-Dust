@@ -30,7 +30,7 @@ public class TESRCompressor extends TileEntitySpecialRenderer<TileEntityCompress
             RenderHelper.enableStandardItemLighting();
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
             GlStateManager.pushMatrix();
-            GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
+            GlStateManager.translate(x + 0.5, y + .25, z + 0.5);
             IBlockState state = te.getWorld().getBlockState(te.getPos());
 
             if (!(state.getValue( BlockHorizontal.FACING ) == EnumFacing.NORTH ||  state.getValue( BlockHorizontal.FACING ) == EnumFacing.SOUTH)) {

@@ -30,6 +30,8 @@ public class CompressorRecipes {
         this.addCompressing(ModItems.matter_dust, new ItemStack(ModItems.matter_dust_compressed), 0.1F);
         this.addCompressing(ModItems.water_dust, new ItemStack(ModItems.water_dust_compressed), 0.1F);
 
+        this.addCompressingRecipeForBlock(Blocks.SAND, new ItemStack(Blocks.SANDSTONE), 0.1F);
+
         this.addCompressing(ModItems.gold_dust, new ItemStack(Items.GOLD_INGOT), 0.1F);
         this.addCompressing(ModItems.iron_dust, new ItemStack(Items.IRON_INGOT), 0.1F);
         this.addCompressing(ModItems.obsidian_dust, new ItemStack(Blocks.OBSIDIAN), 0.1F);

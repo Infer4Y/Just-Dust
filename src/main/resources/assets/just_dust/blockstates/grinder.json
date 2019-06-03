@@ -1,12 +1,16 @@
 {
     "forge_marker": 1,
+    "defaults": {
+        "model": "furnace",
+        "transform": "forge:default-block"
+    },
     "variants": {
-        "facing=north": { "model": "furnace" },
-        "facing=south": { "model": "furnace", "y": 180 },
-        "facing=west":  { "model": "furnace", "y": 270 },
-        "facing=east":  { "model": "furnace", "y": 90 },
-        "inventory": {
-            "model": "furnace"
-        }
+        "facing": {
+            "north": {},
+            "south": { "y": 180 },
+            "west": {"y": 270 },
+            "east": { "y": 90 }
+        },
+        "inventory": [{}]
     }
 }
