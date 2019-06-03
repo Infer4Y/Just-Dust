@@ -33,12 +33,11 @@ import java.util.Random;
 
 public class BlockCompressor extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
-    public static final PropertyInteger FRAME = PropertyInteger.create("frame", 0, 2);
     protected String name;
 
     public BlockCompressor() {
         super(Material.IRON);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(FRAME, 0));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
         setUnlocalizedName("compressor");
         setRegistryName("compressor");
         name = "compressor";
@@ -79,12 +78,12 @@ public class BlockCompressor extends BlockContainer {
 
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(FRAME, 0);
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
 
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(FRAME, 0), 2);
+        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
 
         if (stack.hasDisplayName())
         {
@@ -100,7 +99,7 @@ public class BlockCompressor extends BlockContainer {
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {FACING,FRAME});
+        return new BlockStateContainer(this, new IProperty[] {FACING});
     }
 
     public IBlockState getStateFromMeta(int meta)

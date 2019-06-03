@@ -1,10 +1,13 @@
 {
     "forge_marker": 1,
     "variants": {
-        "facing=north": { "model": "just_dust:compressor" },
+        "facing=north": {
+            "frame=0": {"model": "just_dust:compressor"}
+        },
         "facing=south": { "model": "just_dust:compressor", "y": 180 },
         "facing=west":  { "model": "just_dust:compressor", "y": 270 },
         "facing=east":  { "model": "just_dust:compressor", "y": 90 },
+        "frame": {},
         "inventory": {
             "model": "just_dust:compressor"
         }

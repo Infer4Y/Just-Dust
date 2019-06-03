@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -17,6 +18,8 @@ import xavier.just_dust.JustDust;
 import xavier.just_dust.blocks.ModBlocks;
 import xavier.just_dust.blocks.model.ModelLoaderCable;
 import xavier.just_dust.guis.GuiHandler;
+import xavier.just_dust.tileentities.TESRCompressor;
+import xavier.just_dust.tileentities.TileEntityCompressor;
 
 import static xavier.just_dust.JustDust.MODID;
 
@@ -55,5 +58,10 @@ public class ClientProxy extends CommonProxy{
     @Override
     public void registerItemRenderer(Item item, int meta, String id) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(MODID + ":" + id, "inventory"));
+    }
+
+    @Override
+    public void registerRenderers() {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompressor.class, new TESRCompressor());
     }
 }
