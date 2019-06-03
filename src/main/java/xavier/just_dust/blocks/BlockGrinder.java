@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockGrinder extends BlockContainer{
-    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+    public static final PropertyDirection FACING = BlockHorizontal.FACING;
     protected static String name;
 
     public BlockGrinder() {

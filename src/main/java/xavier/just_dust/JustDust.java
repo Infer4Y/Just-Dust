@@ -24,6 +24,7 @@ public class JustDust {
     @EventHandler
     public  void preInit(FMLPreInitializationEvent event){
         proxy.preInit(event);
+        proxy.registerRenderers();
     }
 
     @EventHandler
