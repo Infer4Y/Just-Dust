@@ -16,6 +16,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -31,10 +32,13 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockCompressor extends BlockContainer {
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+    public static final PropertyInteger FRAME = PropertyInteger.create("frame", 0, 2);
     protected String name;
 
     public BlockCompressor() {
         super(Material.IRON);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(FRAME, 0));
         setUnlocalizedName("compressor");
         setRegistryName("compressor");
         name = "compressor";
@@ -52,9 +56,11 @@ public class BlockCompressor extends BlockContainer {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (worldIn.isRemote)
-            playerIn.openGui(JustDust.instance, GuiHandler.getCompressorGuiID(),worldIn, pos.getX(), pos.getY(), pos.getZ());
+        if (!worldIn.isRemote) {
+            playerIn.openGui(JustDust.instance, GuiHandler.getCompressorGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
             return true;
+        }
+        return false;
     }
 
     @Override
@@ -71,38 +77,69 @@ public class BlockCompressor extends BlockContainer {
         super.breakBlock(worldIn, pos, state);
     }
 
-    @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if (tileEntity instanceof TileEntityCompressor) {
-            TileEntityCompressor tileInventoryFurnace = (TileEntityCompressor)tileEntity;
-            int i = tileInventoryFurnace.getField(3);
-            int j =  tileInventoryFurnace.getField(2);
-            return getDefaultState().withProperty(STATE_ANIMATION,(int) (i/j)/8);
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(FRAME, 0);
+    }
+
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(FRAME, 0), 2);
+
+        if (stack.hasDisplayName())
+        {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+            if (tileentity instanceof TileEntityCompressor)
+            {
+                ((TileEntityCompressor)tileentity).setCustomInventoryName(stack.getDisplayName());
+            }
         }
-        return state;
-    }
-
-    @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return this.getDefaultState().withProperty(STATE_ANIMATION, Integer.valueOf(meta));
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return ((Integer)state.getValue(STATE_ANIMATION)).intValue();
     }
 
     @Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {STATE_ANIMATION});
+        return new BlockStateContainer(this, new IProperty[] {FACING,FRAME});
     }
 
-    public static final PropertyInteger STATE_ANIMATION = PropertyInteger.create("burning_sides_count", 0, 8);
+    public IBlockState getStateFromMeta(int meta)
+    {
+        EnumFacing enumfacing = EnumFacing.getFront(meta);
+
+        if (enumfacing.getAxis() == EnumFacing.Axis.Y)
+        {
+            enumfacing = EnumFacing.NORTH;
+        }
+
+        return this.getDefaultState().withProperty(FACING, enumfacing);
+    }
+
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((EnumFacing)state.getValue(FACING)).getIndex();
+    }
+
+    /**
+     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
+     * blockstate.
+     */
+    public IBlockState withRotation(IBlockState state, Rotation rot)
+    {
+        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+    }
+
+    /**
+     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
+     * blockstate.
+     */
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+    {
+        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+    }
 
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
