@@ -16,6 +16,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xavier.just_dust.JustDust;
 import xavier.just_dust.MachineFuel;
 import xavier.just_dust.blocks.BlockCompressor;
 import xavier.just_dust.containers.ContainerCompressor;
@@ -34,6 +35,12 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
     private int compressingTime;
     private int totalRunTime;
     private String compressorCustomName;
+
+    @Override
+    public void onLoad() {
+        if (world.isRemote) {
+        }
+    }
 
     public int getSizeInventory() {
         return this.compressorItemStacks.length;

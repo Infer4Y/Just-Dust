@@ -30,13 +30,33 @@ public class TESRCompressor extends TileEntitySpecialRenderer<TileEntityCompress
             RenderHelper.enableStandardItemLighting();
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
             GlStateManager.pushMatrix();
-            GlStateManager.translate(x + 0.5, y + .25, z + 0.5);
             IBlockState state = te.getWorld().getBlockState(te.getPos());
-
-            if (!(state.getValue( BlockHorizontal.FACING ) == EnumFacing.NORTH ||  state.getValue( BlockHorizontal.FACING ) == EnumFacing.SOUTH)) {
-                GlStateManager.rotate(90, 0, 1, 0);
+            if (Block.getBlockFromItem(stack.getItem()) == null){
+                GlStateManager.translate(x + 0.5, y + 0.325, z + 0.5);
+                if (!(state.getValue( BlockHorizontal.FACING ) == EnumFacing.NORTH ||  state.getValue( BlockHorizontal.FACING ) == EnumFacing.SOUTH)) {
+                    GlStateManager.rotate(90, 0, 0, 1);
+                } else {
+                    GlStateManager.rotate(90, 1, 0, 0);
+                }
+            } else {
+                GlStateManager.translate(x + 0.5, y + 0.25, z + 0.5);
             }
-
+            switch (state.getValue( BlockHorizontal.FACING )){
+                case NORTH:
+                    GlStateManager.rotate(0, 0, 1, 0);
+                    break;
+                case WEST:
+                    GlStateManager.rotate(270, 0, 1, 0);
+                    break;
+                case EAST:
+                    GlStateManager.rotate(90, 0, 1, 0);
+                    break;
+                case SOUTH:
+                    GlStateManager.rotate(180, 0, 1, 0);
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + state.getValue(BlockHorizontal.FACING));
+            }
 
             IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, te.getWorld(), null);
             model = ForgeHooksClient.handleCameraTransforms(model, ItemCameraTransforms.TransformType.GROUND, false);
