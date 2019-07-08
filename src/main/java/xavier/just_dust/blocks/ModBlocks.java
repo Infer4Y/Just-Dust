@@ -11,7 +11,7 @@ public class ModBlocks {
     public static BaseBlocks fire_dust_block, earth_dust_block, life_dust_block, matter_dust_block, water_dust_block, death_dust_block, energy_dust_block;
     public static BlockCompressor block_compressor;
     public static BlockGrinder block_grinder;
-    public static BlockCable block_cable;
+    public static BlockEnergyCable block_cable;
 
 
     public static void init() {
@@ -24,7 +24,7 @@ public class ModBlocks {
         register(energy_dust_block = new BaseBlocks(Material.SAND, "energy_dust_block"));
         register(block_compressor = (BlockCompressor) new BlockCompressor().setCreativeTab(CreativeTabs.REDSTONE));
         register(block_grinder = (BlockGrinder) new BlockGrinder().setCreativeTab(CreativeTabs.REDSTONE));
-        register(block_cable = new BlockCable(Material.IRON,"block_cable"));
+        register(block_cable = (BlockEnergyCable) new BlockEnergyCable("block_cable").setCreativeTab(CreativeTabs.REDSTONE));
     }
 
     private static <T extends Block> T register(T block, ItemBlock itemBlock) {

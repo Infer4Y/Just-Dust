@@ -11,6 +11,9 @@
             "west": {"y": 270 },
             "east": { "y": 90 }
         },
-        "inventory": [{}]
+        "inventory": {
+            "model": "just_dust:compressor",
+            "transform": "forge:default-block"
+        }
     }
 }

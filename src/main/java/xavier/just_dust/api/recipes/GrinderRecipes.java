@@ -31,7 +31,7 @@ public class GrinderRecipes {
         this.addGrinding(ModItems.water_dust_compressed, new ItemStack(ModItems.water_dust), 0.1F);
 
         this.addGrinding(Items.GOLDEN_SWORD, new ItemStack(ModItems.gold_dust,2), 0.1F);
-        this.addGrinding(Items.DIAMOND_HOE, new ItemStack(ModItems.gold_dust,2), 0.1F);
+        this.addGrinding(Items.GOLDEN_HOE, new ItemStack(ModItems.gold_dust,2), 0.1F);
         this.addGrinding(Items.GOLDEN_SHOVEL, new ItemStack(ModItems.gold_dust,1), 0.1F);
         this.addGrinding(Items.GOLDEN_AXE, new ItemStack(ModItems.gold_dust,3), 0.1F);
         this.addGrinding(Items.GOLDEN_PICKAXE, new ItemStack(ModItems.gold_dust,3), 0.1F);

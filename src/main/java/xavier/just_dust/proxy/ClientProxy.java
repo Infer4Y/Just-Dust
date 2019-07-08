@@ -15,8 +15,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.JustDust;
-import xavier.just_dust.blocks.ModBlocks;
-import xavier.just_dust.blocks.model.ModelLoaderCable;
 import xavier.just_dust.guis.GuiHandler;
 import xavier.just_dust.tileentities.TESRCompressor;
 import xavier.just_dust.tileentities.TileEntityCompressor;
@@ -29,19 +27,6 @@ public class ClientProxy extends CommonProxy{
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
         MinecraftForge.EVENT_BUS.register(this);
-        StateMapperBase ignoreState = new StateMapperBase() {
-            @Override
-            protected ModelResourceLocation getModelResourceLocation(IBlockState iBlockState) {
-                return new ModelResourceLocation("just_dust:block_cable_statemapper_name");
-            }
-        };
-        ModelLoader.setCustomStateMapper(ModBlocks.block_cable, ignoreState);
-
-        ModelLoaderRegistry.registerLoader(new ModelLoaderCable());
-
-        ModelResourceLocation itemModelResourceLocation = new ModelResourceLocation("just_dust:block_cable", "inventory");
-        final int DEFAULT_ITEM_SUBTYPE = 0;
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ModBlocks.block_cable), DEFAULT_ITEM_SUBTYPE, itemModelResourceLocation);
     }
 
     @Override
