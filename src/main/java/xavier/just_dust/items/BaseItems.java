@@ -15,7 +15,7 @@ public class BaseItems extends Item implements ItemModelProvider{
         setCreativeTab(tab);
     }
     @Override
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         JustDust.proxy.registerItemRenderer(this, 0, name);
     }
 

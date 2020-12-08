@@ -4,10 +4,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import xavier.just_dust.JustDust;
 import xavier.just_dust.items.ItemModelProvider;
 
-public class BaseBlocks extends Block implements ItemModelProvider {
+public class BaseBlocks extends Block {
     protected String name;
 
     public BaseBlocks(Material material, String name) {
@@ -20,8 +21,11 @@ public class BaseBlocks extends Block implements ItemModelProvider {
         setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
     }
 
-    @Override
     public void registerItemModel(Item itemBlock) {
         JustDust.proxy.registerItemRenderer(itemBlock, 0, name);
+    }
+
+    public Item createItemBlock() {
+        return new ItemBlock(this).setRegistryName(getRegistryName());
     }
 }

@@ -20,7 +20,7 @@ public class ItemHoes extends net.minecraft.item.ItemHoe implements ItemModelPro
         setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         JustDust.proxy.registerItemRenderer(this, 0, name);
     }
 

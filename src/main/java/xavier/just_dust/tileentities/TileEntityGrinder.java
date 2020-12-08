@@ -1,5 +1,6 @@
 package xavier.just_dust.tileentities;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -11,16 +12,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.MachineFuel;
-import xavier.just_dust.blocks.BlockGrinder;
-import xavier.just_dust.containers.ContainerGrinder;
 import xavier.just_dust.api.recipes.GrinderRecipes;
+import xavier.just_dust.containers.ContainerGrinder;
 import xavier.just_dust.slots.SlotGrinderFuel;
 
 import javax.annotation.Nullable;
@@ -29,43 +34,56 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
     private static final int[] SLOTS_TOP = new int[] {0};
     private static final int[] SLOTS_BOTTOM = new int[] {2,1};
     private static final int[] SLOTS_SIDES = new int[] {1};
-    private ItemStack[] grinderItemStacks = new ItemStack[3];
+    private NonNullList<ItemStack> grinderItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);
     private int grinderRunTime;
-    public static int currentItemRunTime;
-    private int grinderTime;
-    private int totalGrindingTime;
+    private int currentItemRunTime;
+    private int grindingTime;
+    private int totalRunTime;
     private String grinderCustomName;
 
+
+
+    @Override
+    public void onLoad() {
+        if (world.isRemote) {
+        }
+    }
+
     public int getSizeInventory() {
-        return this.grinderItemStacks.length;
+        return this.grinderItemStacks.size();
     }
 
-    @Nullable
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @MethodsReturnNonnullByDefault
     public ItemStack getStackInSlot(int index) {
-        return this.grinderItemStacks[index];
+        return this.grinderItemStacks.get(index);
     }
 
-    @Nullable
+    @MethodsReturnNonnullByDefault
     public ItemStack decrStackSize(int index, int count) {
         return ItemStackHelper.getAndSplit(this.grinderItemStacks, index, count);
     }
 
-    @Nullable
+    @MethodsReturnNonnullByDefault
     public ItemStack removeStackFromSlot(int index) {
         return ItemStackHelper.getAndRemove(this.grinderItemStacks, index);
     }
 
     public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-        boolean flag = stack != null && stack.isItemEqual(this.grinderItemStacks[index]) && ItemStack.areItemStackTagsEqual(stack, this.grinderItemStacks[index]);
-        this.grinderItemStacks[index] = stack;
+        boolean flag = stack != null && stack.isItemEqual((ItemStack) this.grinderItemStacks.get(index)) && ItemStack.areItemStackTagsEqual(stack, this.grinderItemStacks.get(index));
+        this.grinderItemStacks.set(index, stack);
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         if (index == 0 && !flag) {
-            this.totalGrindingTime = this.getGrindingTime(stack);
-            this.grinderTime = 0;
+            this.totalRunTime = this.getCookTime(stack);
+            this.grindingTime = 0;
             this.markDirty();
         }
     }
@@ -82,49 +100,32 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
         this.grinderCustomName = name;
     }
 
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(NBTTagCompound compound)
+    {
         super.readFromNBT(compound);
-        NBTTagList nbttaglist = compound.getTagList("Items", 10);
-        this.grinderItemStacks = new ItemStack[this.getSizeInventory()];
-
-        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
-            int j = nbttagcompound.getByte("Slot");
-
-            if (j >= 0 && j < this.grinderItemStacks.length) {
-                this.grinderItemStacks[j] = ItemStack.loadItemStackFromNBT(nbttagcompound);
-            }
-        }
-
+        this.grinderItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.grinderItemStacks);
         this.grinderRunTime = compound.getInteger("RunTime");
-        this.grinderTime = compound.getInteger("GrindingTime");
-        this.totalGrindingTime = compound.getInteger("GrindingTimeTotal");
-        this.currentItemRunTime = getItemRunTime(this.grinderItemStacks[1]);
+        this.grindingTime = compound.getInteger("GrindingTime");
+        this.totalRunTime = compound.getInteger("GrindingTimeTotal");
+        this.currentItemRunTime = getItemRunTime(this.grinderItemStacks.get(1));
 
-        if (compound.hasKey("CustomName", 8)) {
+        if (compound.hasKey("CustomName", 8))
+        {
             this.grinderCustomName = compound.getString("CustomName");
         }
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
         super.writeToNBT(compound);
-        compound.setInteger("RunTime", this.grinderRunTime);
-        compound.setInteger("GrindingTime", this.grinderTime);
-        compound.setInteger("GrinderTimeTotal", this.totalGrindingTime);
-        NBTTagList nbttaglist = new NBTTagList();
+        compound.setInteger("RunTime", (short)this.grinderRunTime);
+        compound.setInteger("GrindingTime", (short)this.grindingTime);
+        compound.setInteger("GrindingTimeTotal", (short)this.totalRunTime);
+        ItemStackHelper.saveAllItems(compound, this.grinderItemStacks);
 
-        for (int i = 0; i < this.grinderItemStacks.length; ++i) {
-            if (this.grinderItemStacks[i] != null) {
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte)i);
-                this.grinderItemStacks[i].writeToNBT(nbttagcompound);
-                nbttaglist.appendTag(nbttagcompound);
-            }
-        }
-
-        compound.setTag("Items", nbttaglist);
-
-        if (this.hasCustomName()) {
+        if (this.hasCustomName())
+        {
             compound.setString("CustomName", this.grinderCustomName);
         }
 
@@ -149,39 +150,39 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
         boolean flag1 = false;
 
         if (!this.world.isRemote) {
-            if (this.isRunning() || this.grinderItemStacks[1] != null && this.grinderItemStacks[0] != null) {
-                if (!this.isRunning() && this.canCompressing()) {
-                    this.currentItemRunTime = this.grinderRunTime = getItemRunTime(this.grinderItemStacks[1]);
+            if (this.isRunning() || this.grinderItemStacks.get(1) != null && this.grinderItemStacks.get(0) != null) {
+                if (!this.isRunning() && this.canGrind()) {
+                    this.currentItemRunTime = this.grinderRunTime = getItemRunTime((ItemStack) this.grinderItemStacks.get(1));
 
                     if (this.isRunning()) {
                         flag1 = true;
 
-                        if (this.grinderItemStacks[1] != null) {
-                            --this.grinderItemStacks[1].stackSize;
+                        if (this.grinderItemStacks.get(1) != null) {
+                            ((ItemStack) this.grinderItemStacks.get(1)).shrink(1);
 
-                            if (this.grinderItemStacks[1].stackSize == 0) {
-                                this.grinderItemStacks[1] = grinderItemStacks[1].getItem().getContainerItem(grinderItemStacks[1]);
+                            if (((ItemStack) this.grinderItemStacks.get(1)).getCount() == 0) {
+                                this.grinderItemStacks.set(1, ((ItemStack) grinderItemStacks.get(1)).getItem().getContainerItem((ItemStack) grinderItemStacks.get(1)));
                             }
                         }
                     }
                 }
 
-                if (this.isRunning() && this.canCompressing()) {
-                    ++this.grinderTime;
+                if (this.isRunning() && this.canGrind()) {
+                    ++this.grindingTime;
 
-                    if (this.grinderTime == this.totalGrindingTime) {
-                        this.grinderTime = 0;
-                        this.totalGrindingTime = this.getGrindingTime(this.grinderItemStacks[0]);
-                        this.compressItem();
+                    if (this.grindingTime == this.totalRunTime) {
+                        this.grindingTime = 0;
+                        this.totalRunTime = this.getCookTime((ItemStack) this.grinderItemStacks.get(0));
+                        this.grindItem();
                         flag1 = true;
                     }
 
                     --this.grinderRunTime;
                 } else {
-                    this.grinderTime = 0;
+                    this.grindingTime = 0;
                 }
-            } else if (!this.isRunning() && this.grinderTime > 0) {
-                this.grinderTime = MathHelper.clamp(this.grinderTime - 2, 0, this.totalGrindingTime);
+            } else if (!this.isRunning() && this.grindingTime > 0) {
+                this.grindingTime = MathHelper.clamp(this.grindingTime - 2, 0, this.totalRunTime);
             }
 
             if (flag != this.isRunning()) {
@@ -194,42 +195,42 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
         }
     }
 
-    public int getGrindingTime(@Nullable ItemStack stack) {
+    public int getCookTime(@Nullable ItemStack stack) {
         return 200;
     }
 
-    private boolean canCompressing() {
-        if (this.grinderItemStacks[0] == null) {
+    private boolean canGrind() {
+        if (((ItemStack)this.grinderItemStacks.get(0)).isEmpty()) {
             return false;
         } else {
-            ItemStack itemstack = GrinderRecipes.instance().getGrindingResult(this.grinderItemStacks[0]);
-            if (itemstack == null) return false;
-            if (this.grinderItemStacks[2] == null) return true;
-            if (!this.grinderItemStacks[2].isItemEqual(itemstack)) return false;
-            int result = grinderItemStacks[2].stackSize + itemstack.stackSize;
-            return result <= getInventoryStackLimit() && result <= this.grinderItemStacks[2].getMaxStackSize();
+            ItemStack itemstack = GrinderRecipes.instance().getGrindingResult((ItemStack) this.grinderItemStacks.get(0));
+            if (itemstack == null || itemstack.isEmpty()) return false;
+            if (((ItemStack)this.grinderItemStacks.get(2)).isEmpty()) return true;
+            if (!this.grinderItemStacks.get(2).isItemEqual(itemstack)) return false;
+            int result = ((ItemStack) grinderItemStacks.get(2)).getCount() + itemstack.getCount();
+            return result <= getInventoryStackLimit() && result <= ((ItemStack)this.grinderItemStacks.get(2)).getMaxStackSize();
         }
     }
 
-    public void compressItem() {
-        if (this.canCompressing()) {
-            ItemStack itemstack = GrinderRecipes.instance().getGrindingResult(this.grinderItemStacks[0]);
+    public void grindItem() {
+        if (this.canGrind()) {
+            ItemStack itemstack = GrinderRecipes.instance().getGrindingResult((ItemStack) this.grinderItemStacks.get(0));
 
-            if (this.grinderItemStacks[2] == null) {
-                this.grinderItemStacks[2] = itemstack.copy();
-            } else if (this.grinderItemStacks[2].getItem() == itemstack.getItem()) {
-                this.grinderItemStacks[2].stackSize += itemstack.stackSize; // Forge BugFix: Results may have multiple items
+            if (((ItemStack)this.grinderItemStacks.get(2)).isEmpty()) {
+                this.grinderItemStacks.set(2,itemstack.copy()) ;
+            } else if (((ItemStack)this.grinderItemStacks.get(2)).getItem() == itemstack.getItem()) {
+                ((ItemStack)this.grinderItemStacks.get(2)).grow(itemstack.getCount()); // Forge BugFix: Results may have multiple items
             }
 
-            --this.grinderItemStacks[0].stackSize;
+            ((ItemStack)this.grinderItemStacks.get(0)).shrink(1);
 
-            if (this.grinderItemStacks[0].stackSize <= 0) {
-                this.grinderItemStacks[0] = null;
+            if (((ItemStack)this.grinderItemStacks.get(0)).getCount() <= 0) {
+                this.grinderItemStacks.set(0, ItemStack.EMPTY);
             }
         }
     }
 
-    public static int getItemRunTime(ItemStack stack) {
+    public static int getItemRunTime(ItemStack stack){
         if (stack == null) {
             return 0;
         } else {
@@ -237,7 +238,8 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
         }
     }
 
-    public static boolean isItemFuel(ItemStack stack) {
+    public static boolean isItemFuel(ItemStack stack)
+    {
         return getItemRunTime(stack) > 0;
     }
 
@@ -247,7 +249,9 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
 
     public void openInventory(EntityPlayer player) {}
 
-    public void closeInventory(EntityPlayer player) {}
+    public void closeInventory(EntityPlayer player) {
+        this.markDirty();
+    }
 
     public boolean isItemValidForSlot(int index, ItemStack stack) {
         if (index == 2) {
@@ -255,8 +259,8 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
         } else if (index != 1) {
             return true;
         } else {
-            ItemStack itemstack = this.grinderItemStacks[1];
-            return isItemFuel(stack) || SlotGrinderFuel.isBucket(stack) && (itemstack == null || itemstack.getItem() != Items.BUCKET);
+            ItemStack itemstack = ((ItemStack)this.grinderItemStacks.get(1));
+            return isItemFuel(stack) || SlotGrinderFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
         }
     }
 
@@ -283,7 +287,13 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
         return "just_dust:grinder";
     }
 
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+    public static void registerFixesFurnace(DataFixer fixer)
+    {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityGrinder.class, new String[] {"Items"}));
+    }
+
+    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    {
         return new ContainerGrinder(playerInventory, this);
     }
 
@@ -296,9 +306,9 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
             case 1:
                 return this.currentItemRunTime;
             case 2:
-                return this.grinderTime;
+                return this.grindingTime;
             case 3:
-                return this.totalGrindingTime;
+                return this.totalRunTime;
             default:
                 return 0;
         }
@@ -315,10 +325,10 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
                 this.currentItemRunTime = value;
                 break;
             case 2:
-                this.grinderTime = value;
+                this.grindingTime = value;
                 break;
             case 3:
-                this.totalGrindingTime = value;
+                this.totalRunTime = value;
         }
     }
 
@@ -327,18 +337,18 @@ public class TileEntityGrinder extends TileEntityLockable implements ITickable, 
     }
 
     public void clear() {
-        for (int i = 0; i < this.grinderItemStacks.length; ++i) {
-            this.grinderItemStacks[i] = null;
+        for (int i = 0; i < this.grinderItemStacks.size(); ++i) {
+            this.grinderItemStacks.set(i, ItemStack.EMPTY);
         }
     }
 
-    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, EnumFacing.UP);
-    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, EnumFacing.DOWN);
-    net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, EnumFacing.WEST);
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
+    net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, EnumFacing facing) {
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, net.minecraft.util.EnumFacing facing) {
         if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             if (facing == EnumFacing.DOWN)
                 return (T) handlerBottom;

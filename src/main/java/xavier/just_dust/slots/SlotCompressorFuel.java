@@ -23,6 +23,6 @@ public class SlotCompressorFuel extends Slot {
     }
 
     public static boolean isBucket(ItemStack stack) {
-        return stack != null && stack.getItem() != null && stack.getItem() == Items.BUCKET;
+        return !stack.isEmpty() && stack.getItem() == Items.BUCKET;
     }
 }

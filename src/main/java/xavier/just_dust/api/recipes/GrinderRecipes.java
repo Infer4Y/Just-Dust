@@ -8,13 +8,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import xavier.just_dust.items.ModItems;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 
-public class GrinderRecipes {
+public class GrinderRecipes extends MachineRecipeManager {
     private static final GrinderRecipes COMPRESSING_BASE = new GrinderRecipes();
-    private Map<ItemStack, ItemStack> grinding_list = Maps.<ItemStack, ItemStack>newHashMap();
-    private Map<ItemStack, Float> experience_list = Maps.<ItemStack, Float>newHashMap();
+    private final Map<ItemStack, ItemStack> GRINDING_LIST = Maps.newHashMap();
+    private final Map<ItemStack, Float> experience_list = Maps.newHashMap();
 
     public static GrinderRecipes instance()
     {
@@ -22,6 +21,7 @@ public class GrinderRecipes {
     }
 
     public GrinderRecipes() {
+        super("grinder_crafting");
         this.addGrinding(ModItems.death_dust_compressed, new ItemStack(ModItems.death_dust), 0.1F);
         this.addGrinding(ModItems.earth_dust_compressed, new ItemStack(ModItems.earth_dust), 0.1F);
         this.addGrinding(ModItems.energy_dust_compressed, new ItemStack(ModItems.energy_dust), 0.1F);
@@ -106,57 +106,51 @@ public class GrinderRecipes {
         this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,8), new ItemStack(Items.DYE,3,7), 0.1f);
     }
 
-    public void addGrindingRecipeForBlock(Block input, ItemStack stack, float experience) {
+    public void addGrindingRecipeForBlock( Block input,  ItemStack stack, float experience) {
         this.addGrinding(Item.getItemFromBlock(input), stack, experience);
     }
 
-    public void addGrinding(Item input, ItemStack stack, float experience) {
+    public void addGrinding( Item input,  ItemStack stack, float experience) {
         this.addGrindingRecipe(new ItemStack(input, 1, 32767), stack, experience);
     }
 
-    public void addGrinding(ItemStack input, ItemStack stack, float experience) {
+    public void addGrinding( ItemStack input,  ItemStack stack, float experience) {
         this.addGrindingRecipe(input, stack, experience);
     }
 
-    public void addGrindingRecipe(ItemStack input, ItemStack stack, float experience) {
+    public void addGrindingRecipe( ItemStack input,  ItemStack stack, float experience) {
         if (getGrindingResult(input) != null) {
-            net.minecraftforge.fml.common.FMLLog.info("Ignored compressing recipe with conflicting input: " + input + " = " + stack);
             return;
         }
-        this.grinding_list.put(input, stack);
-        this.experience_list.put(stack, Float.valueOf(experience));
+        this.GRINDING_LIST.put(input, stack);
+        this.experience_list.put(stack, experience);
     }
 
-    @Nullable
-    public ItemStack getGrindingResult(ItemStack stack) {
-        for (Map.Entry<ItemStack, ItemStack> entry : this.grinding_list.entrySet()) {
-            if (this.compareItemStacks(stack, (ItemStack)entry.getKey())) {
-                return (ItemStack)entry.getValue();
+    public ItemStack getGrindingResult( ItemStack stack) {
+        for (Map.Entry<ItemStack, ItemStack> entry : this.GRINDING_LIST.entrySet()) {
+            if (this.compareItemStacks(stack, entry.getKey())) {
+                return entry.getValue();
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     private boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {
         return stack2.getItem() == stack1.getItem() && (stack2.getMetadata() == 32767 || stack2.getMetadata() == stack1.getMetadata());
     }
 
-    public Map<ItemStack, ItemStack> getGrinding_list() {
-        return this.grinding_list;
+    public Map<ItemStack, ItemStack> getGrindingList() {
+        return this.GRINDING_LIST;
     }
 
     public float getGrindingExperience(ItemStack stack) {
-        float ret = stack.getItem().getSmeltingExperience(stack);
-        if (ret != -1)
-            return ret;
-
         for (Map.Entry<ItemStack, Float> entry : this.experience_list.entrySet()) {
-            if (this.compareItemStacks(stack, (ItemStack)entry.getKey())) {
-                return ((Float)entry.getValue()).floatValue();
+            if (this.compareItemStacks(stack, entry.getKey())) {
+                return entry.getValue();
             }
         }
 
-        return 0.0F;
+        return stack.getItem().getSmeltingExperience(stack);
     }
 }

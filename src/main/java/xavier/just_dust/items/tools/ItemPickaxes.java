@@ -21,7 +21,7 @@ public class ItemPickaxes extends net.minecraft.item.ItemPickaxe implements Item
     }
 
 
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         JustDust.proxy.registerItemRenderer(this, 0, name);
     }
 }

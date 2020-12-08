@@ -97,17 +97,19 @@ public abstract class BlockCableBase extends  BaseBlocks {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB mask, List<AxisAlignedBB> list, @Nullable Entity collidingEntity) {
-        final AxisAlignedBB bb = new AxisAlignedBB(PIPE_MIN_POS, PIPE_MIN_POS, PIPE_MIN_POS, PIPE_MAX_POS, PIPE_MAX_POS, PIPE_MAX_POS);
-        addCollisionBoxToList(pos, mask, list, bb);
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+        AxisAlignedBB bb = new AxisAlignedBB(PIPE_MIN_POS, PIPE_MIN_POS, PIPE_MIN_POS, PIPE_MAX_POS, PIPE_MAX_POS, PIPE_MAX_POS);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, bb);
 
         state = getActualState(state, worldIn, pos);
 
         for (final EnumFacing facing : EnumFacing.VALUES) {
             if (isConnected(state, facing)) {
-                final AxisAlignedBB axisAlignedBB = CONNECTED_BOUNDING_BOXES.get(facing.getIndex());
-                addCollisionBoxToList(pos, mask, list, axisAlignedBB);
+                AxisAlignedBB axisAlignedBB = CONNECTED_BOUNDING_BOXES.get(facing.getIndex());
+                addCollisionBoxToList(pos, entityBox, collidingBoxes, axisAlignedBB);
             }
         }
     }
+
+
 }

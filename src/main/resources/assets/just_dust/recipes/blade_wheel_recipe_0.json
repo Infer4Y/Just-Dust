@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "fif",
+    "fff",
+    "fff"
+  ],
+  "key":
+  {
+    "i":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "f":
+    {
+      "item": "minecraft:flint"
+    }
+  },
+  "result":
+  {
+    "item": "just_dust:blade_wheel",
+    "count": 1
+  }
+}

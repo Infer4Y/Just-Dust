@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "iii",
+    "iii",
+    "iii"
+  ],
+  "key":
+  {
+    "i":
+    {
+      "item": "just_dust:life_dust_compressed"
+    }
+  },
+  "result":
+  {
+    "item": "just_dust:life_dust_block",
+    "count": 1
+  }
+}

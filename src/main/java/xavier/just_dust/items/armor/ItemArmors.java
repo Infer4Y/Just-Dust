@@ -22,7 +22,7 @@ public class ItemArmors extends net.minecraft.item.ItemArmor implements ItemMode
     }
 
     @Override
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         JustDust.proxy.registerItemRenderer(this, 0, name);
     }
 }

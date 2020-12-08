@@ -19,11 +19,11 @@ public class MachineFuel {
             Block block = Block.getBlockFromItem(item);
 
             if (block == Blocks.REDSTONE_TORCH) {
-                return 150;
+                return 1600;
             }
 
             if (block == Blocks.REDSTONE_LAMP) {
-                return 300;
+                return 1600;
             }
 
             if (block == Blocks.REDSTONE_BLOCK) {

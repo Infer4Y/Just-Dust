@@ -25,15 +25,15 @@ public class SlotGrinderOutput extends Slot {
 
     public ItemStack decrStackSize(int amount) {
         if (this.getHasStack()) {
-            this.removeCount += Math.min(amount, this.getStack().stackSize);
+            this.removeCount += Math.min(amount, this.getStack().getCount());
         }
 
         return super.decrStackSize(amount);
     }
 
-    public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack) {
+    public ItemStack onTake(EntityPlayer playerIn, ItemStack stack) {
         this.onCrafting(stack);
-        super.onPickupFromSlot(playerIn, stack);
+        return super.onTake(playerIn, stack);
     }
 
     protected void onCrafting(ItemStack stack, int amount) {

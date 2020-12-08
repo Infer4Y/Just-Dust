@@ -8,20 +8,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import xavier.just_dust.items.ModItems;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 
-public class CompressorRecipes {
+public class CompressorRecipes extends MachineRecipeManager {
     private static final CompressorRecipes COMPRESSING_BASE = new CompressorRecipes();
-    private Map<ItemStack, ItemStack> compressing_list = Maps.<ItemStack, ItemStack>newHashMap();
-    private Map<ItemStack, Float> experience_list = Maps.<ItemStack, Float>newHashMap();
+    private final Map<ItemStack, ItemStack> compressing_list = Maps.newHashMap();
+    private final Map<ItemStack, Float> experience_list = Maps.newHashMap();
 
     public static CompressorRecipes instance()
     {
         return COMPRESSING_BASE;
     }
 
-    public CompressorRecipes() {
+    private CompressorRecipes() {
+        super("compressor_crafting");
         this.addCompressing(ModItems.death_dust, new ItemStack(ModItems.death_dust_compressed), 0.1F);
         this.addCompressing(ModItems.earth_dust, new ItemStack(ModItems.earth_dust_compressed), 0.1F);
         this.addCompressing(ModItems.energy_dust, new ItemStack(ModItems.energy_dust_compressed), 0.1F);
@@ -52,43 +52,37 @@ public class CompressorRecipes {
 
     public void addCompressingRecipe(ItemStack input, ItemStack stack, float experience) {
         if (getCompressingResult(input) != null) {
-            net.minecraftforge.fml.common.FMLLog.info("Ignored compressing recipe with conflicting input: " + input + " = " + stack);
             return;
         }
         this.compressing_list.put(input, stack);
-        this.experience_list.put(stack, Float.valueOf(experience));
+        this.experience_list.put(stack, experience);
     }
 
-    @Nullable
     public ItemStack getCompressingResult(ItemStack stack) {
         for (Map.Entry<ItemStack, ItemStack> entry : this.compressing_list.entrySet()) {
-            if (this.compareItemStacks(stack, (ItemStack)entry.getKey())) {
-                return (ItemStack)entry.getValue();
+            if (this.compareItemStacks(stack, entry.getKey())) {
+                return entry.getValue();
             }
         }
 
-        return null;
+        return ItemStack.EMPTY;
     }
 
     private boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {
         return stack2.getItem() == stack1.getItem() && (stack2.getMetadata() == 32767 || stack2.getMetadata() == stack1.getMetadata());
     }
 
-    public Map<ItemStack, ItemStack> getCompressing_list() {
+    public Map<ItemStack, ItemStack> getCompressingList() {
         return this.compressing_list;
     }
 
     public float getCompressingExperience(ItemStack stack) {
-        float ret = stack.getItem().getSmeltingExperience(stack);
-        if (ret != -1)
-            return ret;
-
         for (Map.Entry<ItemStack, Float> entry : this.experience_list.entrySet()) {
-            if (this.compareItemStacks(stack, (ItemStack)entry.getKey())) {
-                return ((Float)entry.getValue()).floatValue();
+            if (this.compareItemStacks(stack, entry.getKey())) {
+                return entry.getValue();
             }
         }
 
-        return 0.0F;
+        return stack.getItem().getSmeltingExperience(stack);
     }
 }

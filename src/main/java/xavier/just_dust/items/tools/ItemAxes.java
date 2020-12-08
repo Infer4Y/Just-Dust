@@ -1,4 +1,4 @@
-package net.myfreesites.xavierddmodandthing.nethermod.items.tools;
+package xavier.just_dust.items.tools;
 
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -21,7 +21,7 @@ public class ItemAxes extends ItemAxe implements ItemModelProvider {
         setCreativeTab(CreativeTabs.TOOLS);
     }
 
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         JustDust.proxy.registerItemRenderer(this, 0, name);
     }
 

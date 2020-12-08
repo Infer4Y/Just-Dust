@@ -1,14 +1,14 @@
 [
   {
     "modid": "just_dust",
-    "name": "Just_dust",
-    "description": "    Just Dust is a mod that adds dust for Gold, Iron, Diamond, Obsidian, Lapis, Element Death, Element Life, Element Fire, Element Water, Element Matter, and Element Earth. Just Dust has two Machines(so far), Grinder Tier I, and Compressor Tier I.",
-    "version": "2.0.0-R",
-    "mcversion": "1.9.4",
-    "url": "https://minecraft.curseforge.com/projects/just-dust",
-    "updateUrl": "https://github.com/WolfNationMC/Just-Dust/releases",
-    "authorList": ["XavierDD1st"],
-    "credits": "JetBrains for the Intellij Idea Ide that let me code the new version of the mod.",
+    "name": "Just Dust",
+    "description": "Just Dust is a mod that adds dust for Gold, Iron, Diamond, Obsidian, Lapis, Element Death, Element Life, Element Fire, Element Water, Element Matter, and Element Earth. Just Dust has two Machines(so far), Grinder Tier I, and Compressor Tier I.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["XavierDD1st","Inferno4you"],
+    "credits": "",
     "logoFile": "logo.png",
     "screenshots": [],
     "dependencies": []

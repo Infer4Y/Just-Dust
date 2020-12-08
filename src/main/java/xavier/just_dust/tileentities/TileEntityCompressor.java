@@ -1,5 +1,6 @@
 package xavier.just_dust.tileentities;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -10,9 +11,14 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.datafix.FixTypes;
+import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,12 +30,14 @@ import xavier.just_dust.api.recipes.CompressorRecipes;
 import xavier.just_dust.slots.SlotCompressorFuel;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileEntityCompressor extends TileEntityLockable implements ITickable, ISidedInventory {
     private static final int[] SLOTS_TOP = new int[] {0};
     private static final int[] SLOTS_BOTTOM = new int[] {2,1};
     private static final int[] SLOTS_SIDES = new int[] {1};
-    private ItemStack[] compressorItemStacks = new ItemStack[3];
+    private NonNullList<ItemStack> compressorItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);;
     private int compressorRunTime;
     private int currentItemRunTime;
     private int compressingTime;
@@ -43,30 +51,35 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
     }
 
     public int getSizeInventory() {
-        return this.compressorItemStacks.length;
+        return this.compressorItemStacks.size();
     }
 
-    @Nullable
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @MethodsReturnNonnullByDefault
     public ItemStack getStackInSlot(int index) {
-        return this.compressorItemStacks[index];
+        return this.compressorItemStacks.get(index);
     }
 
-    @Nullable
+    @MethodsReturnNonnullByDefault
     public ItemStack decrStackSize(int index, int count) {
         return ItemStackHelper.getAndSplit(this.compressorItemStacks, index, count);
     }
 
-    @Nullable
+    @MethodsReturnNonnullByDefault
     public ItemStack removeStackFromSlot(int index) {
         return ItemStackHelper.getAndRemove(this.compressorItemStacks, index);
     }
 
     public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-        boolean flag = stack != null && stack.isItemEqual(this.compressorItemStacks[index]) && ItemStack.areItemStackTagsEqual(stack, this.compressorItemStacks[index]);
-        this.compressorItemStacks[index] = stack;
+        boolean flag = stack != null && stack.isItemEqual((ItemStack) this.compressorItemStacks.get(index)) && ItemStack.areItemStackTagsEqual(stack, this.compressorItemStacks.get(index));
+        this.compressorItemStacks.set(index, stack);
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
 
         if (index == 0 && !flag) {
@@ -74,6 +87,10 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
             this.compressingTime = 0;
             this.markDirty();
         }
+    }
+
+    public static void registerFixesFurnace(DataFixer fixer) {
+        fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityCompressor.class, new String[] {"Items"}));
     }
 
     public String getName() {
@@ -88,49 +105,32 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
         this.compressorCustomName = name;
     }
 
-    public void readFromNBT(NBTTagCompound compound) {
+    public void readFromNBT(NBTTagCompound compound)
+    {
         super.readFromNBT(compound);
-        NBTTagList nbttaglist = compound.getTagList("Items", 10);
-        this.compressorItemStacks = new ItemStack[this.getSizeInventory()];
-
-        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
-            int j = nbttagcompound.getByte("Slot");
-
-            if (j >= 0 && j < this.compressorItemStacks.length) {
-                this.compressorItemStacks[j] = ItemStack.loadItemStackFromNBT(nbttagcompound);
-            }
-        }
-
+        this.compressorItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.compressorItemStacks);
         this.compressorRunTime = compound.getInteger("RunTime");
         this.compressingTime = compound.getInteger("CompressingTime");
         this.totalRunTime = compound.getInteger("CompressingTimeTotal");
-        this.currentItemRunTime = getItemRunTime(this.compressorItemStacks[1]);
+        this.currentItemRunTime = getItemRunTime(this.compressorItemStacks.get(1));
 
-        if (compound.hasKey("CustomName", 8)) {
+        if (compound.hasKey("CustomName", 8))
+        {
             this.compressorCustomName = compound.getString("CustomName");
         }
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    {
         super.writeToNBT(compound);
-        compound.setInteger("RunTime", this.compressorRunTime);
-        compound.setInteger("CompressingTime", this.compressingTime);
-        compound.setInteger("CompressingTimeTotal", this.totalRunTime);
-        NBTTagList nbttaglist = new NBTTagList();
+        compound.setInteger("RunTime", (short)this.compressorRunTime);
+        compound.setInteger("CompressingTime", (short)this.compressingTime);
+        compound.setInteger("CompressingTimeTotal", (short)this.totalRunTime);
+        ItemStackHelper.saveAllItems(compound, this.compressorItemStacks);
 
-        for (int i = 0; i < this.compressorItemStacks.length; ++i) {
-            if (this.compressorItemStacks[i] != null) {
-                NBTTagCompound nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setByte("Slot", (byte)i);
-                this.compressorItemStacks[i].writeToNBT(nbttagcompound);
-                nbttaglist.appendTag(nbttagcompound);
-            }
-        }
-
-        compound.setTag("Items", nbttaglist);
-
-        if (this.hasCustomName()) {
+        if (this.hasCustomName())
+        {
             compound.setString("CustomName", this.compressorCustomName);
         }
 
@@ -155,18 +155,18 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
         boolean flag1 = false;
 
         if (!this.world.isRemote) {
-            if (this.isRunning() || this.compressorItemStacks[1] != null && this.compressorItemStacks[0] != null) {
+            if (this.isRunning() || this.compressorItemStacks.get(0) != null) {
                 if (!this.isRunning() && this.canCompressing()) {
-                    this.currentItemRunTime = this.compressorRunTime = getItemRunTime(this.compressorItemStacks[1]);
+                    this.currentItemRunTime = this.compressorRunTime = getItemRunTime((ItemStack) this.compressorItemStacks.get(1));
 
                     if (this.isRunning()) {
                         flag1 = true;
 
-                        if (this.compressorItemStacks[1] != null) {
-                            --this.compressorItemStacks[1].stackSize;
+                        if (this.compressorItemStacks.get(1) != null) {
+                            ((ItemStack) this.compressorItemStacks.get(1)).shrink(1);
 
-                            if (this.compressorItemStacks[1].stackSize == 0) {
-                                this.compressorItemStacks[1] = compressorItemStacks[1].getItem().getContainerItem(compressorItemStacks[1]);
+                            if (((ItemStack) this.compressorItemStacks.get(1)).getCount() == 0) {
+                                this.compressorItemStacks.set(1, ((ItemStack) compressorItemStacks.get(1)).getItem().getContainerItem((ItemStack) compressorItemStacks.get(1)));
                             }
                         }
                     }
@@ -177,7 +177,7 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
 
                     if (this.compressingTime == this.totalRunTime) {
                         this.compressingTime = 0;
-                        this.totalRunTime = this.getCookTime(this.compressorItemStacks[0]);
+                        this.totalRunTime = this.getCookTime((ItemStack) this.compressorItemStacks.get(0));
                         this.compressItem();
                         flag1 = true;
                     }
@@ -205,32 +205,32 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
     }
 
     private boolean canCompressing() {
-        if (this.compressorItemStacks[0] == null) {
+        if (((ItemStack)this.compressorItemStacks.get(0)).isEmpty() ) {
             return false;
         } else {
-            ItemStack itemstack = CompressorRecipes.instance().getCompressingResult(this.compressorItemStacks[0]);
-            if (itemstack == null) return false;
-            if (this.compressorItemStacks[2] == null) return true;
-            if (!this.compressorItemStacks[2].isItemEqual(itemstack)) return false;
-            int result = compressorItemStacks[2].stackSize + itemstack.stackSize;
-            return result <= getInventoryStackLimit() && result <= this.compressorItemStacks[2].getMaxStackSize();
+            ItemStack itemstack = CompressorRecipes.instance().getCompressingResult((ItemStack) this.compressorItemStacks.get(0));
+            if (itemstack == null || itemstack.isEmpty()) return false;
+            if (((ItemStack)this.compressorItemStacks.get(2)).isEmpty()) return true;
+            if (!this.compressorItemStacks.get(2).isItemEqual(itemstack)) return false;
+            int result = ((ItemStack)compressorItemStacks.get(2)).getCount() + itemstack.getCount();
+            return result <= getInventoryStackLimit() && result <= ((ItemStack)this.compressorItemStacks.get(2)).getMaxStackSize();
         }
     }
 
     public void compressItem() {
         if (this.canCompressing()) {
-            ItemStack itemstack = CompressorRecipes.instance().getCompressingResult(this.compressorItemStacks[0]);
+            ItemStack itemstack = CompressorRecipes.instance().getCompressingResult((ItemStack) this.compressorItemStacks.get(0));
 
-            if (this.compressorItemStacks[2] == null) {
-                this.compressorItemStacks[2] = itemstack.copy();
-            } else if (this.compressorItemStacks[2].getItem() == itemstack.getItem()) {
-                this.compressorItemStacks[2].stackSize += itemstack.stackSize; // Forge BugFix: Results may have multiple items
+            if (((ItemStack)this.compressorItemStacks.get(2)).isEmpty()) {
+                this.compressorItemStacks.set(2,itemstack.copy()) ;
+            } else if (((ItemStack)this.compressorItemStacks.get(2)).getItem() == itemstack.getItem()) {
+                ((ItemStack)this.compressorItemStacks.get(2)).grow(itemstack.getCount()); // Forge BugFix: Results may have multiple items
             }
 
-            --this.compressorItemStacks[0].stackSize;
+            ((ItemStack)this.compressorItemStacks.get(0)).shrink(1);
 
-            if (this.compressorItemStacks[0].stackSize <= 0) {
-                this.compressorItemStacks[0] = null;
+            if (((ItemStack)this.compressorItemStacks.get(0)).getCount() <= 0) {
+                this.compressorItemStacks.set(0, ItemStack.EMPTY);
             }
         }
     }
@@ -254,7 +254,9 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
 
     public void openInventory(EntityPlayer player) {}
 
-    public void closeInventory(EntityPlayer player) {}
+    public void closeInventory(EntityPlayer player) {
+        this.markDirty();
+    }
 
     public boolean isItemValidForSlot(int index, ItemStack stack) {
         if (index == 2) {
@@ -262,8 +264,8 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
         } else if (index != 1) {
             return true;
         } else {
-            ItemStack itemstack = this.compressorItemStacks[1];
-            return isItemFuel(stack) || SlotCompressorFuel.isBucket(stack) && (itemstack == null || itemstack.getItem() != Items.BUCKET);
+            ItemStack itemstack = ((ItemStack)this.compressorItemStacks.get(1));
+            return isItemFuel(stack) || SlotCompressorFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
         }
     }
 
@@ -335,8 +337,8 @@ public class TileEntityCompressor extends TileEntityLockable implements ITickabl
     }
 
     public void clear() {
-        for (int i = 0; i < this.compressorItemStacks.length; ++i) {
-            this.compressorItemStacks[i] = null;
+        for (int i = 0; i < this.compressorItemStacks.size(); ++i) {
+            this.compressorItemStacks.set(i, ItemStack.EMPTY);
         }
     }
 

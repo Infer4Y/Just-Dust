@@ -2,10 +2,10 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "centre": "minecraft:blocks/glass",
+      "center": "minecraft:blocks/glass",
       "side": "minecraft:blocks/glass"
     },
-    "model": "just_dust:cablecentre",
+    "model": "just_dust:block/cable_center",
     "uvlock": true
   },
   "variants": {
@@ -13,7 +13,7 @@
       "true": {
         "submodel": {
           "pipe_down": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "x": 90,
             "uvlock": true
           }
@@ -25,7 +25,7 @@
       "true": {
         "submodel": {
           "pipe_up": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "x": -90,
             "uvlock": true
           }
@@ -37,7 +37,7 @@
       "true": {
         "submodel": {
           "pipe_north": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "uvlock": true
           }
         }
@@ -48,7 +48,7 @@
       "true": {
         "submodel": {
           "pipe_south": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "y": 180,
             "uvlock": true
           }
@@ -60,7 +60,7 @@
       "true": {
         "submodel": {
           "pipe_east": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "y": 90,
             "uvlock": true
           }
@@ -72,7 +72,7 @@
       "true": {
         "submodel": {
           "pipe_west": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "y": -90,
             "uvlock": true
           }
@@ -84,11 +84,11 @@
       {
         "submodel": {
           "pipe_north": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "uvlock": true
           },
           "pipe_south": {
-            "model": "just_dust:cableside",
+            "model": "just_dust:block/cable_side",
             "y": 180,
             "uvlock": true
           }

@@ -25,15 +25,16 @@ public class SlotCompressorOutput extends Slot {
 
     public ItemStack decrStackSize(int amount) {
         if (this.getHasStack()) {
-            this.removeCount += Math.min(amount, this.getStack().stackSize);
+            this.removeCount += Math.min(amount, this.getStack().getCount());
         }
 
         return super.decrStackSize(amount);
     }
 
-    public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack) {
+    @Override
+    public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
         this.onCrafting(stack);
-        super.onPickupFromSlot(playerIn, stack);
+        return super.onTake(thePlayer, stack);
     }
 
     protected void onCrafting(ItemStack stack, int amount) {

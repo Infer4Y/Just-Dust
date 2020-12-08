@@ -20,8 +20,10 @@ import xavier.just_dust.blocks.BlockCompressor;
 
 public class TESRCompressor extends TileEntitySpecialRenderer<TileEntityCompressor> {
 
+
     @Override
-    public void renderTileEntityAt(TileEntityCompressor te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(TileEntityCompressor te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+        super.render(te, x, y, z, partialTicks, destroyStage, alpha);
         ItemStack stack = te.getStackInSlot(0);
         if (stack != null) {
             GlStateManager.enableRescaleNormal();

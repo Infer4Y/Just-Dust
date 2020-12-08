@@ -20,7 +20,7 @@ public class ItemSwords extends net.minecraft.item.ItemSword implements ItemMode
         setCreativeTab(CreativeTabs.COMBAT);
     }
 
-    public void registerItemModel(Item item) {
+    public void registerItemModel() {
         JustDust.proxy.registerItemRenderer(this, 0, name);
     }
 

@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "#center"
+  },
+  "elements": [
+    {
+      "from": [ 4, 4, 4 ],
+      "to": [ 12, 12, 12 ],
+      "faces": {
+        "down": { "texture": "#center" },
+        "up": { "texture": "#centre" },
+        "north": { "texture": "#center" },
+        "south": { "texture": "#center" },
+        "west": { "texture": "#center" },
+        "east": { "texture": "#center" }
+      },
+      "__comment": "Center cube"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "IRI",
+    "P P",
+    "IRI"
+  ],
+  "key":
+  {
+    "I":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "R":
+    {
+      "item": "minecraft:redstone"
+    },
+    "P":
+    {
+      "item": "minecraft:piston"
+    }
+  },
+  "result":
+  {
+    "item": "just_dust:block_compressor",
+    "count": 1
+  }
+}
