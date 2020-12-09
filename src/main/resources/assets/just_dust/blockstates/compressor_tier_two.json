@@ -2,8 +2,8 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "dust_water_ore": "just_dust:blocks/death_dust_block",
-            "death_dust_block": "minecraft:blocks/iron_block"
+            "dust_water_ore": "just_dust:blocks/ores/dust_death_ore",
+            "death_dust_block": "just_dust:blocks/death_dust_block"
         },
         "model": "just_dust:compressor_tier_one",
         "transform": "forge:default-block"

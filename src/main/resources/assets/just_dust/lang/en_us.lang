@@ -43,4 +43,9 @@ container.grinder_tier_one=Grinder Tier I
 
 itemGroup.parts_just_dust=Materials
 itemGroup.blocks_just_dust=Block
+
 itemGroup.machine_just_dust=Machines
+
+tile.compressor_tier_two.name=Compressor Tier II
+tile.grinder_tier_two.name=Grinder Tier II
+

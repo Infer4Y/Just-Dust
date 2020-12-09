@@ -14,13 +14,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
+import xavier.just_dust.common.blocks.BlockGrinderTierOne;
 
 public class TESRGrinderTierOne extends TileEntitySpecialRenderer<TileEntityGrinderTierOne> {
 
 
     @Override
     public void render(TileEntityGrinderTierOne te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        super.render(te, x, y, z, partialTicks, destroyStage, alpha);
+        //super.render(te, x, y, z, partialTicks, destroyStage, alpha);
         ItemStack stack = te.getStackInSlot(0);
         if (!stack.isEmpty()) {
             GlStateManager.enableRescaleNormal();
@@ -30,7 +31,8 @@ public class TESRGrinderTierOne extends TileEntitySpecialRenderer<TileEntityGrin
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
             GlStateManager.pushMatrix();
             IBlockState state = te.getWorld().getBlockState(te.getPos());
-            if (stack.getItem() instanceof ItemBlock){
+            float runTimePer = ((float)te.getField(2))/((float)te.getField(3));
+            if (!(stack.getItem() instanceof ItemBlock)){
                 GlStateManager.translate(x + 0.5, y + 0.325, z + 0.5);
                 if (!(state.getValue( BlockHorizontal.FACING ) == EnumFacing.NORTH ||  state.getValue( BlockHorizontal.FACING ) == EnumFacing.SOUTH)) {
                     GlStateManager.rotate(90, 0, 0, 1);
@@ -38,7 +40,7 @@ public class TESRGrinderTierOne extends TileEntitySpecialRenderer<TileEntityGrin
                     GlStateManager.rotate(90, 1, 0, 0);
                 }
             } else {
-                GlStateManager.translate(x + 0.5, y + 0.25, z + 0.5);
+                GlStateManager.translate(x + 0.5, (y + 0.75f)-runTimePer/2f, z + 0.5);
             }
             switch (state.getValue( BlockHorizontal.FACING )){
                 case NORTH:

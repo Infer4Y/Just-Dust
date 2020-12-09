@@ -52,7 +52,7 @@ public class CompressorRecipes extends MachineRecipeManager {
     }
 
     public void addCompressingRecipe(ItemStack input, ItemStack stack, float experience) {
-        if (getCompressingResult(input) != null) {
+        if (getCompressingResult(input) != ItemStack.EMPTY) {
             return;
         }
         this.compressing_list.put(input, stack);

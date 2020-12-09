@@ -13,13 +13,13 @@ import xavier.just_dust.common.slots.SlotCompressorOutput;
 import xavier.just_dust.common.tile_entities.TileEntityCompressorTierOne;
 
 public class ContainerCompressor extends Container {
-    private final TileEntityCompressorTierOne tileCompressor;
+    private final IInventory tileCompressor;
     private int cookTime;
     private int totalCookTime;
     private int furnaceBurnTime;
     private int currentItemBurnTime;
 
-    public ContainerCompressor(InventoryPlayer playerInventory, TileEntityCompressorTierOne compressorInventory) {
+    public ContainerCompressor(InventoryPlayer playerInventory, IInventory compressorInventory) {
         this.tileCompressor = compressorInventory;
         this.addSlotToContainer(new Slot(compressorInventory, 0, 56, 17));
         this.addSlotToContainer(new SlotCompressorFuel(compressorInventory, 1, 56, 53));

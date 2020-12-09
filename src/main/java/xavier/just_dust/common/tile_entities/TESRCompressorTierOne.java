@@ -4,12 +4,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -21,7 +23,7 @@ public class TESRCompressorTierOne extends TileEntitySpecialRenderer<TileEntityC
 
     @Override
     public void render(TileEntityCompressorTierOne te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-        super.render(te, x, y, z, partialTicks, destroyStage, alpha);
+        //super.render(te, x, y, z, partialTicks, destroyStage, alpha);
         ItemStack stack = te.getStackInSlot(0);
         if (!stack.isEmpty()) {
             GlStateManager.enableRescaleNormal();
@@ -31,7 +33,7 @@ public class TESRCompressorTierOne extends TileEntitySpecialRenderer<TileEntityC
             GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
             GlStateManager.pushMatrix();
             IBlockState state = te.getWorld().getBlockState(te.getPos());
-            if (stack.getItem() instanceof ItemBlock){
+            if (!(stack.getItem() instanceof ItemBlock)) {
                 GlStateManager.translate(x + 0.5, y + 0.325, z + 0.5);
                 if (!(state.getValue( BlockHorizontal.FACING ) == EnumFacing.NORTH ||  state.getValue( BlockHorizontal.FACING ) == EnumFacing.SOUTH)) {
                     GlStateManager.rotate(90, 0, 0, 1);

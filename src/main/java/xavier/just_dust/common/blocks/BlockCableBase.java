@@ -25,8 +25,8 @@ import java.util.stream.Stream;
 
 public abstract class BlockCableBase extends  BaseBlocks {
 
-    public static final float PIPE_MIN_POS = 0.4375f;
-    public static final float PIPE_MAX_POS = 0.6875f;
+    public static final float PIPE_MIN_POS = 3f/8f;
+    public static final float PIPE_MAX_POS = 3f/4f;
 
     public static final ImmutableList<IProperty<Boolean>> CONNECTED_PROPERTIES = ImmutableList.copyOf(
             Stream.of(EnumFacing.VALUES)
@@ -121,6 +121,20 @@ public abstract class BlockCableBase extends  BaseBlocks {
                 addCollisionBoxToList(pos, entityBox, collidingBoxes, axisAlignedBB);
             }
         }
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        state = state.getActualState(source, pos);
+
+        float f1 = (isConnected(state,EnumFacing.WEST)) ? 0.0F : PIPE_MIN_POS;
+        float f2 = (isConnected(state,EnumFacing.DOWN)) ? 0.0F : PIPE_MIN_POS;
+        float f3 = (isConnected(state,EnumFacing.NORTH)) ? 0.0F : PIPE_MIN_POS;
+        float f4 = (isConnected(state,EnumFacing.EAST)) ? 1.0F : PIPE_MAX_POS;
+        float f5 = (isConnected(state,EnumFacing.UP)) ? 1.0F : PIPE_MAX_POS;
+        float f6 = (isConnected(state,EnumFacing.SOUTH)) ? 1.0F : PIPE_MAX_POS;
+
+        return new AxisAlignedBB((double)f1, (double)f2, (double)f3, (double)f4, (double)f5, (double)f6);
     }
 
     @Override

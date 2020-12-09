@@ -12,13 +12,13 @@ import xavier.just_dust.common.slots.SlotGrinderOutput;
 import xavier.just_dust.common.tile_entities.TileEntityGrinderTierOne;
 
 public class ContainerGrinder extends Container {
-    private final TileEntityGrinderTierOne tileCompressor;
+    private final IInventory tileCompressor;
     private int cookTime;
     private int totalCookTime;
     private int furnaceBurnTime;
     private int currentItemBurnTime;
 
-    public ContainerGrinder(InventoryPlayer playerInventory, TileEntityGrinderTierOne compressorInventory) {
+    public ContainerGrinder(InventoryPlayer playerInventory, IInventory compressorInventory) {
         this.tileCompressor = compressorInventory;
         this.addSlotToContainer(new Slot(compressorInventory, 0, 56, 17));
         this.addSlotToContainer(new SlotGrinderFuel(compressorInventory, 1, 56, 53));

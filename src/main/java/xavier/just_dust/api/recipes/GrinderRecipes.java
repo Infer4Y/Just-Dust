@@ -116,7 +116,7 @@ public class GrinderRecipes extends MachineRecipeManager {
     }
 
     public void addGrindingRecipe( ItemStack input,  ItemStack stack, float experience) {
-        if (getGrindingResult(input) != null) {
+        if (getGrindingResult(input) != ItemStack.EMPTY) {
             return;
         }
         this.GRINDING_LIST.put(input, stack);
