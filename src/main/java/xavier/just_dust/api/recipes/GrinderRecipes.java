@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import xavier.just_dust.items.ModItems;
+import xavier.just_dust.common.items.ModItems;
 
 import java.util.Map;
 
@@ -14,6 +14,7 @@ public class GrinderRecipes extends MachineRecipeManager {
     private static final GrinderRecipes COMPRESSING_BASE = new GrinderRecipes();
     private final Map<ItemStack, ItemStack> GRINDING_LIST = Maps.newHashMap();
     private final Map<ItemStack, Float> experience_list = Maps.newHashMap();
+    private final Map<ItemStack, Integer> time_list = Maps.newHashMap();
 
     public static GrinderRecipes instance()
     {
@@ -22,100 +23,96 @@ public class GrinderRecipes extends MachineRecipeManager {
 
     public GrinderRecipes() {
         super("grinder_crafting");
-        this.addGrinding(ModItems.death_dust_compressed, new ItemStack(ModItems.death_dust), 0.1F);
-        this.addGrinding(ModItems.earth_dust_compressed, new ItemStack(ModItems.earth_dust), 0.1F);
-        this.addGrinding(ModItems.energy_dust_compressed, new ItemStack(ModItems.energy_dust), 0.1F);
-        this.addGrinding(ModItems.fire_dust_compressed, new ItemStack(ModItems.fire_dust), 0.1F);
-        this.addGrinding(ModItems.life_dust_compressed, new ItemStack(ModItems.life_dust), 0.1F);
-        this.addGrinding(ModItems.matter_dust_compressed, new ItemStack(ModItems.matter_dust), 0.1F);
-        this.addGrinding(ModItems.water_dust_compressed, new ItemStack(ModItems.water_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.death_dust_compressed, new ItemStack(ModItems.death_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.earth_dust_compressed, new ItemStack(ModItems.earth_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.energy_dust_compressed, new ItemStack(ModItems.energy_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.fire_dust_compressed, new ItemStack(ModItems.fire_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.life_dust_compressed, new ItemStack(ModItems.life_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.matter_dust_compressed, new ItemStack(ModItems.matter_dust), 0.1F);
+        this.addGrindingRecipe(ModItems.water_dust_compressed, new ItemStack(ModItems.water_dust), 0.1F);
 
-        this.addGrinding(Items.GOLDEN_SWORD, new ItemStack(ModItems.gold_dust,2), 0.1F);
-        this.addGrinding(Items.GOLDEN_HOE, new ItemStack(ModItems.gold_dust,2), 0.1F);
-        this.addGrinding(Items.GOLDEN_SHOVEL, new ItemStack(ModItems.gold_dust,1), 0.1F);
-        this.addGrinding(Items.GOLDEN_AXE, new ItemStack(ModItems.gold_dust,3), 0.1F);
-        this.addGrinding(Items.GOLDEN_PICKAXE, new ItemStack(ModItems.gold_dust,3), 0.1F);
-        this.addGrinding(Items.GOLDEN_BOOTS, new ItemStack(ModItems.gold_dust,4), 0.1F);
-        this.addGrinding(Items.GOLDEN_LEGGINGS, new ItemStack(ModItems.gold_dust,7), 0.1F);
-        this.addGrinding(Items.GOLDEN_CHESTPLATE, new ItemStack(ModItems.gold_dust,8), 0.1F);
-        this.addGrinding(Items.GOLDEN_HELMET, new ItemStack(ModItems.gold_dust,5), 0.1F);
-        this.addGrinding(new ItemStack(Items.GOLDEN_APPLE, 1, 0), new ItemStack(ModItems.gold_dust,8), 0.1F);
-        this.addGrinding(new ItemStack(Items.GOLDEN_APPLE, 1, 1), new ItemStack(ModItems.gold_dust,72), 0.9F);
-        this.addGrinding(Items.GOLD_INGOT, new ItemStack(ModItems.gold_dust), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_SWORD, new ItemStack(ModItems.gold_dust,2), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_HOE, new ItemStack(ModItems.gold_dust,2), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_SHOVEL, new ItemStack(ModItems.gold_dust,1), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_AXE, new ItemStack(ModItems.gold_dust,3), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_PICKAXE, new ItemStack(ModItems.gold_dust,3), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_BOOTS, new ItemStack(ModItems.gold_dust,4), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_LEGGINGS, new ItemStack(ModItems.gold_dust,7), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_CHESTPLATE, new ItemStack(ModItems.gold_dust,8), 0.1F);
+        this.addGrindingRecipe(Items.GOLDEN_HELMET, new ItemStack(ModItems.gold_dust,5), 0.1F);
+        this.addGrindingRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 0), new ItemStack(ModItems.gold_dust,8), 0.1F);
+        this.addGrindingRecipe(new ItemStack(Items.GOLDEN_APPLE, 1, 1), new ItemStack(ModItems.gold_dust,72), 0.9F);
+        this.addGrindingRecipe(Items.GOLD_INGOT, new ItemStack(ModItems.gold_dust), 0.1F);
 
-        this.addGrinding(Items.EMERALD, new ItemStack(ModItems.emerald_dust), 0.1F);
-        this.addGrinding(new ItemStack(Items.DYE, 1, 4), new ItemStack(ModItems.lapis_dust), 0.1F);
+        this.addGrindingRecipe(Items.EMERALD, new ItemStack(ModItems.emerald_dust), 0.1F);
+        this.addGrindingRecipe(new ItemStack(Items.DYE, 1, 4), new ItemStack(ModItems.lapis_dust), 0.1F);
 
-        this.addGrinding(Items.DIAMOND, new ItemStack(ModItems.diamond_dust), 0.1F);
-        this.addGrinding(Items.DIAMOND_SWORD, new ItemStack(ModItems.diamond_dust,2), 0.1F);
-        this.addGrinding(Items.DIAMOND_HOE, new ItemStack(ModItems.diamond_dust,2), 0.1F);
-        this.addGrinding(Items.DIAMOND_SHOVEL, new ItemStack(ModItems.diamond_dust,1), 0.1F);
-        this.addGrinding(Items.DIAMOND_AXE, new ItemStack(ModItems.diamond_dust,3), 0.1F);
-        this.addGrinding(Items.DIAMOND_PICKAXE, new ItemStack(ModItems.diamond_dust,3), 0.1F);
-        this.addGrinding(Items.DIAMOND_BOOTS, new ItemStack(ModItems.diamond_dust,4), 0.1F);
-        this.addGrinding(Items.DIAMOND_LEGGINGS, new ItemStack(ModItems.diamond_dust,7), 0.1F);
-        this.addGrinding(Items.DIAMOND_CHESTPLATE, new ItemStack(ModItems.diamond_dust,8), 0.1F);
-        this.addGrinding(Items.DIAMOND_HELMET, new ItemStack(ModItems.diamond_dust,5), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND, new ItemStack(ModItems.diamond_dust), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_SWORD, new ItemStack(ModItems.diamond_dust,2), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_HOE, new ItemStack(ModItems.diamond_dust,2), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_SHOVEL, new ItemStack(ModItems.diamond_dust,1), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_AXE, new ItemStack(ModItems.diamond_dust,3), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_PICKAXE, new ItemStack(ModItems.diamond_dust,3), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_BOOTS, new ItemStack(ModItems.diamond_dust,4), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_LEGGINGS, new ItemStack(ModItems.diamond_dust,7), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_CHESTPLATE, new ItemStack(ModItems.diamond_dust,8), 0.1F);
+        this.addGrindingRecipe(Items.DIAMOND_HELMET, new ItemStack(ModItems.diamond_dust,5), 0.1F);
 
-        this.addGrinding(Items.IRON_INGOT, new ItemStack(ModItems.iron_dust), 0.1F);
-        this.addGrinding(Items.IRON_SWORD, new ItemStack(ModItems.iron_dust,2), 0.1F);
-        this.addGrinding(Items.IRON_HOE, new ItemStack(ModItems.iron_dust,2), 0.1F);
-        this.addGrinding(Items.IRON_SHOVEL, new ItemStack(ModItems.iron_dust,1), 0.1F);
-        this.addGrinding(Items.IRON_AXE, new ItemStack(ModItems.iron_dust,3), 0.1F);
-        this.addGrinding(Items.IRON_PICKAXE, new ItemStack(ModItems.iron_dust,3), 0.1F);
-        this.addGrinding(Items.IRON_BOOTS, new ItemStack(ModItems.iron_dust,4), 0.1F);
-        this.addGrinding(Items.IRON_LEGGINGS, new ItemStack(ModItems.iron_dust,7), 0.1F);
-        this.addGrinding(Items.IRON_CHESTPLATE, new ItemStack(ModItems.iron_dust,8), 0.1F);
-        this.addGrinding(Items.IRON_HELMET, new ItemStack(ModItems.iron_dust,5), 0.1F);
+        this.addGrindingRecipe(Items.IRON_INGOT, new ItemStack(ModItems.iron_dust), 0.1F);
+        this.addGrindingRecipe(Items.IRON_SWORD, new ItemStack(ModItems.iron_dust,2), 0.1F);
+        this.addGrindingRecipe(Items.IRON_HOE, new ItemStack(ModItems.iron_dust,2), 0.1F);
+        this.addGrindingRecipe(Items.IRON_SHOVEL, new ItemStack(ModItems.iron_dust,1), 0.1F);
+        this.addGrindingRecipe(Items.IRON_AXE, new ItemStack(ModItems.iron_dust,3), 0.1F);
+        this.addGrindingRecipe(Items.IRON_PICKAXE, new ItemStack(ModItems.iron_dust,3), 0.1F);
+        this.addGrindingRecipe(Items.IRON_BOOTS, new ItemStack(ModItems.iron_dust,4), 0.1F);
+        this.addGrindingRecipe(Items.IRON_LEGGINGS, new ItemStack(ModItems.iron_dust,7), 0.1F);
+        this.addGrindingRecipe(Items.IRON_CHESTPLATE, new ItemStack(ModItems.iron_dust,8), 0.1F);
+        this.addGrindingRecipe(Items.IRON_HELMET, new ItemStack(ModItems.iron_dust,5), 0.1F);
 
-        this.addGrindingRecipeForBlock(Blocks.OBSIDIAN, new ItemStack(ModItems.obsidian_dust, 1), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.LAPIS_ORE, new ItemStack(ModItems.lapis_dust, 16), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.GOLD_ORE, new ItemStack(ModItems.gold_dust, 3), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.DIAMOND_ORE, new ItemStack(ModItems.diamond_dust,3), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.EMERALD_ORE, new ItemStack(ModItems.emerald_dust, 3), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.IRON_ORE, new ItemStack(ModItems.iron_dust, 3), 0.1F);
+        this.addGrindingRecipe(Blocks.OBSIDIAN, new ItemStack(ModItems.obsidian_dust, 1), 0.1F);
+        this.addGrindingRecipe(Blocks.LAPIS_ORE, new ItemStack(ModItems.lapis_dust, 16), 0.1F);
+        this.addGrindingRecipe(Blocks.GOLD_ORE, new ItemStack(ModItems.gold_dust, 3), 0.1F);
+        this.addGrindingRecipe(Blocks.DIAMOND_ORE, new ItemStack(ModItems.diamond_dust,3), 0.1F);
+        this.addGrindingRecipe(Blocks.EMERALD_ORE, new ItemStack(ModItems.emerald_dust, 3), 0.1F);
+        this.addGrindingRecipe(Blocks.IRON_ORE, new ItemStack(ModItems.iron_dust, 3), 0.1F);
 
-        this.addGrindingRecipeForBlock(Blocks.LAPIS_BLOCK, new ItemStack(ModItems.lapis_dust, 9), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.GOLD_BLOCK, new ItemStack(ModItems.gold_dust, 9), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.DIAMOND_BLOCK, new ItemStack(ModItems.diamond_dust,9), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.EMERALD_BLOCK, new ItemStack(ModItems.emerald_dust, 9), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.IRON_BLOCK, new ItemStack(ModItems.iron_dust, 9), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.IRON_BARS, new ItemStack(ModItems.iron_dust, 6), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.IRON_TRAPDOOR, new ItemStack(ModItems.iron_dust, 4), 0.1F);
-        this.addGrindingRecipeForBlock(Blocks.IRON_DOOR, new ItemStack(ModItems.iron_dust, 6), 0.1F);
+        this.addGrindingRecipe(Blocks.LAPIS_BLOCK, new ItemStack(ModItems.lapis_dust, 9), 0.1F);
+        this.addGrindingRecipe(Blocks.GOLD_BLOCK, new ItemStack(ModItems.gold_dust, 9), 0.1F);
+        this.addGrindingRecipe(Blocks.DIAMOND_BLOCK, new ItemStack(ModItems.diamond_dust,9), 0.1F);
+        this.addGrindingRecipe(Blocks.EMERALD_BLOCK, new ItemStack(ModItems.emerald_dust, 9), 0.1F);
+        this.addGrindingRecipe(Blocks.IRON_BLOCK, new ItemStack(ModItems.iron_dust, 9), 0.1F);
+        this.addGrindingRecipe(Blocks.IRON_BARS, new ItemStack(ModItems.iron_dust, 6), 0.1F);
+        this.addGrindingRecipe(Blocks.IRON_TRAPDOOR, new ItemStack(ModItems.iron_dust, 4), 0.1F);
+        this.addGrindingRecipe(Blocks.IRON_DOOR, new ItemStack(ModItems.iron_dust, 6), 0.1F);
 
-        this.addGrinding(Items.BONE, new ItemStack(Items.DYE,9,15),0.1f);
+        this.addGrindingRecipe(Items.BONE, new ItemStack(Items.DYE,9,15),0.1f);
 
-        this.addGrinding(Items.BEETROOT, new ItemStack(Items.DYE,9,1),0.1f);
+        this.addGrindingRecipe(Items.BEETROOT, new ItemStack(Items.DYE,9,1),0.1f);
 
-        this.addGrinding(new ItemStack(Blocks.YELLOW_FLOWER,1,0), new ItemStack(Items.DYE,3,11), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.YELLOW_FLOWER,1,0), new ItemStack(Items.DYE,3,11), 0.1f);
 
-        this.addGrinding(new ItemStack(Blocks.DOUBLE_PLANT,1,0), new ItemStack(Items.DYE,3,11), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.DOUBLE_PLANT,1,1), new ItemStack(Items.DYE,3,13), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.DOUBLE_PLANT,1,4), new ItemStack(Items.DYE,3,1), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.DOUBLE_PLANT,1,5), new ItemStack(Items.DYE,3,9), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.DOUBLE_PLANT,1,0), new ItemStack(Items.DYE,3,11), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.DOUBLE_PLANT,1,1), new ItemStack(Items.DYE,3,13), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.DOUBLE_PLANT,1,4), new ItemStack(Items.DYE,3,1), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.DOUBLE_PLANT,1,5), new ItemStack(Items.DYE,3,9), 0.1f);
 
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,0), new ItemStack(Items.DYE,3,1), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,1), new ItemStack(Items.DYE,3,12), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,2), new ItemStack(Items.DYE,3, 13), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,3), new ItemStack(Items.DYE,3,7), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,4), new ItemStack(Items.DYE,3,1), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,5), new ItemStack(Items.DYE,3,14), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,6), new ItemStack(Items.DYE,3,7), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,7), new ItemStack(Items.DYE,3,9), 0.1f);
-        this.addGrinding(new ItemStack(Blocks.RED_FLOWER,1,8), new ItemStack(Items.DYE,3,7), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,0), new ItemStack(Items.DYE,3,1), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,1), new ItemStack(Items.DYE,3,12), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,2), new ItemStack(Items.DYE,3, 13), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,3), new ItemStack(Items.DYE,3,7), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,4), new ItemStack(Items.DYE,3,1), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,5), new ItemStack(Items.DYE,3,14), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,6), new ItemStack(Items.DYE,3,7), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,7), new ItemStack(Items.DYE,3,9), 0.1f);
+        this.addGrindingRecipe(new ItemStack(Blocks.RED_FLOWER,1,8), new ItemStack(Items.DYE,3,7), 0.1f);
     }
 
-    public void addGrindingRecipeForBlock( Block input,  ItemStack stack, float experience) {
-        this.addGrinding(Item.getItemFromBlock(input), stack, experience);
+    public void addGrindingRecipe( Block input,  ItemStack stack, float experience) {
+        this.addGrindingRecipe(Item.getItemFromBlock(input), stack, experience);
     }
 
-    public void addGrinding( Item input,  ItemStack stack, float experience) {
+    public void addGrindingRecipe( Item input,  ItemStack stack, float experience) {
         this.addGrindingRecipe(new ItemStack(input, 1, 32767), stack, experience);
-    }
-
-    public void addGrinding( ItemStack input,  ItemStack stack, float experience) {
-        this.addGrindingRecipe(input, stack, experience);
     }
 
     public void addGrindingRecipe( ItemStack input,  ItemStack stack, float experience) {
@@ -152,5 +149,15 @@ public class GrinderRecipes extends MachineRecipeManager {
         }
 
         return stack.getItem().getSmeltingExperience(stack);
+    }
+
+    public int getGrindingTime(ItemStack stack) {
+        for (Map.Entry<ItemStack, Integer> entry : this.time_list.entrySet()) {
+            if (this.compareItemStacks(stack, entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+
+        return 200;
     }
 }

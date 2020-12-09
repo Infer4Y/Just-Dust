@@ -9,11 +9,11 @@ import xavier.just_dust.api.recipes.GrinderRecipes;
 
 public class JustDustAPI {
     public static void addGrinding(Block input, ItemStack output, float xp) {
-        GrinderRecipes.instance().addGrindingRecipeForBlock(input, output, xp);
+        GrinderRecipes.instance().addGrindingRecipe(input, output, xp);
     }
 
     public static void addGrinding(Item input, ItemStack output, float xp) {
-        GrinderRecipes.instance().addGrinding(input, output, xp);
+        GrinderRecipes.instance().addGrindingRecipe(input, output, xp);
     }
 
     public static void addGrinding(ItemStack input, ItemStack output, float xp) {
@@ -40,11 +40,11 @@ public class JustDustAPI {
     }
 
     public static void addCompressing(Block input, ItemStack output, float xp) {
-        CompressorRecipes.instance().addCompressingRecipeForBlock(input, output, xp);
+        CompressorRecipes.instance().addCompressingRecipe(input, output, xp);
     }
 
     public static void addCompressing(Item input, ItemStack output, float xp) {
-        CompressorRecipes.instance().addCompressing(input, output, xp);
+        CompressorRecipes.instance().addCompressingRecipe(input, output, xp);
     }
 
     public static void addCompressing(ItemStack input, ItemStack output, float xp) {

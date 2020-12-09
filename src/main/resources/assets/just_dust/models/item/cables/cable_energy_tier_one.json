@@ -1,0 +1,6 @@
+{
+  "parent": "just_dust:item/cables/cable_center",
+  "textures": {
+    "center": "just_dust:blocks/death_dust_block"
+  }
+}

@@ -32,10 +32,15 @@ tile.life_dust_block.name=Life Dust Block
 tile.matter_dust_block.name=Matter Dust Block
 tile.water_dust_block.name=Water Dust Block
 
-tile.compressor.name=Compressor Tier I
-tile.grinder.name=Grinder Tier I
+tile.compressor_tier_one.name=Compressor Tier I
+tile.grinder_tier_one.name=Grinder Tier I
 
-tile.block_cable.name=Cable
+tile.cable_energy_tier_one.name=Energy Cable Tier I
+tile.cable_energy_tier_two.name=Energy Cable Tier II
 
-container.compressor=Compressor
-container.grinder=Grinder
+container.compressor_tier_one=Compressor Tier I
+container.grinder_tier_one=Grinder Tier I
+
+itemGroup.parts_just_dust=Materials
+itemGroup.blocks_just_dust=Block
+itemGroup.machine_just_dust=Machines

@@ -1,0 +1,135 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "death_dust_block": "just_dust:blocks/death_dust_block",
+        "blade_wheel_full": "just_dust:items/parts/blade_wheel0"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 45, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.25, 0.25, 0.25 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "name": "BackPanel",
+            "from": [ 0, 0, 0 ], 
+            "to": [ 16, 16, 1 ], 
+            "faces": {
+                "north": { "texture": "#death_dust_block", "uv": [ 0, 0, 16, 16 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 16 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 16, 16 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 16 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 0, 0, 16, 1 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 0, 0, 16, 1 ] }
+            }
+        },
+        {
+            "name": "LeftPanel",
+            "from": [ 0, 0, 1 ], 
+            "to": [ 1, 16, 16 ], 
+            "faces": {
+                "east": { "texture": "#death_dust_block", "uv": [ 0, 0, 15, 16 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 16 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 1, 0, 16, 16 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 15 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 15 ] }
+            }
+        },
+        {
+            "name": "RightPanel",
+            "from": [ 15, 0, 1 ], 
+            "to": [ 16, 16, 16 ], 
+            "faces": {
+                "east": { "texture": "#death_dust_block", "uv": [ 0, 0, 15, 16 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 16 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 1, 0, 16, 16 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 15 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 0, 0, 1, 15 ] }
+            }
+        },
+        {
+            "name": "BottomPanel",
+            "from": [ 1, 0, 1 ], 
+            "to": [ 15, 1, 16 ], 
+            "faces": {
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 14, 1 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 1, 15, 16 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 0, 15, 15 ] }
+            }
+        },
+        {
+            "name": "Blade0",
+            "from": [ 1, 9, 1 ], 
+            "to": [ 15, 10, 15 ], 
+            "faces": {
+                "up": { "texture": "#blade_wheel_full", "uv": [ 2, 0, 16, 14 ], "rotation": 180, "cullface": "up" },
+                "down": { "texture": "#blade_wheel_full", "uv": [ 2, 0, 16, 14 ], "rotation": 180 }
+            }
+        },
+        {
+            "name": "Blade1",
+            "from": [ 1, 6, 1 ], 
+            "to": [ 15, 7, 15 ], 
+            "faces": {
+                "up": { "texture": "#blade_wheel_full", "uv": [ 2, 0, 16, 14 ], "rotation": 270 },
+                "down": { "texture": "#blade_wheel_full", "uv": [ 2, 0, 16, 14 ] }
+            }
+        },
+        {
+            "name": "TopBar",
+            "from": [ 1, 15, 15 ], 
+            "to": [ 15, 16, 16 ], 
+            "faces": {
+                "north": { "texture": "#death_dust_block", "uv": [ 0, 0, 14, 1 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 14, 1 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 0, 15, 1 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 0, 15, 1 ] }
+            }
+        },
+        {
+            "name": "MidBar",
+            "from": [ 1, 9, 15 ], 
+            "to": [ 15, 10, 16 ], 
+            "faces": {
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 14, 1 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 0, 15, 1 ] }
+            }
+        },
+        {
+            "name": "MidBar2",
+            "from": [ 1, 6, 15 ], 
+            "to": [ 15, 7, 16 ], 
+            "faces": {
+                "south": { "texture": "#death_dust_block", "uv": [ 0, 0, 14, 1 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 0, 15, 1 ] }
+            }
+        }
+    ]
+}

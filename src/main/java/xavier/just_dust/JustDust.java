@@ -6,16 +6,16 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import xavier.just_dust.proxy.CommonProxy;
+import xavier.just_dust.common.CommonProxy;
 
 @Mod(modid = JustDust.MODID, name = JustDust.MOD_NAME, version = JustDust.VERSION)
 public class JustDust {
 
     public static final String MODID = "just_dust";
     public static final String MOD_NAME = "Just Dust";
-    public static final String VERSION = "2.1.0-R";
+    public static final String VERSION = "3.0.0-R";
 
-    @SidedProxy(clientSide = "xavier.just_dust.proxy.ClientProxy", serverSide = "xavier.just_dust.proxy.ServerProxy")
+    @SidedProxy(clientSide = "xavier.just_dust.client.ClientProxy", serverSide = "xavier.just_dust.server.ServerProxy")
     public static CommonProxy proxy;
 
     @Mod.Instance

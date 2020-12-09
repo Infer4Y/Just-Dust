@@ -6,7 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import xavier.just_dust.items.ModItems;
+import xavier.just_dust.common.items.ModItems;
 
 import java.util.Map;
 
@@ -14,6 +14,7 @@ public class CompressorRecipes extends MachineRecipeManager {
     private static final CompressorRecipes COMPRESSING_BASE = new CompressorRecipes();
     private final Map<ItemStack, ItemStack> compressing_list = Maps.newHashMap();
     private final Map<ItemStack, Float> experience_list = Maps.newHashMap();
+    private final Map<ItemStack, Integer> time_list = Maps.newHashMap();
 
     public static CompressorRecipes instance()
     {
@@ -22,31 +23,31 @@ public class CompressorRecipes extends MachineRecipeManager {
 
     private CompressorRecipes() {
         super("compressor_crafting");
-        this.addCompressing(ModItems.death_dust, new ItemStack(ModItems.death_dust_compressed), 0.1F);
-        this.addCompressing(ModItems.earth_dust, new ItemStack(ModItems.earth_dust_compressed), 0.1F);
-        this.addCompressing(ModItems.energy_dust, new ItemStack(ModItems.energy_dust_compressed), 0.1F);
-        this.addCompressing(ModItems.fire_dust, new ItemStack(ModItems.fire_dust_compressed), 0.1F);
-        this.addCompressing(ModItems.life_dust, new ItemStack(ModItems.life_dust_compressed), 0.1F);
-        this.addCompressing(ModItems.matter_dust, new ItemStack(ModItems.matter_dust_compressed), 0.1F);
-        this.addCompressing(ModItems.water_dust, new ItemStack(ModItems.water_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.death_dust, new ItemStack(ModItems.death_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.earth_dust, new ItemStack(ModItems.earth_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.energy_dust, new ItemStack(ModItems.energy_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.fire_dust, new ItemStack(ModItems.fire_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.life_dust, new ItemStack(ModItems.life_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.matter_dust, new ItemStack(ModItems.matter_dust_compressed), 0.1F);
+        this.addCompressingRecipe(ModItems.water_dust, new ItemStack(ModItems.water_dust_compressed), 0.1F);
 
-        this.addCompressingRecipeForBlock(Blocks.SAND, new ItemStack(Blocks.SANDSTONE), 0.1F);
+        this.addCompressingRecipe(Blocks.SAND, new ItemStack(Blocks.SANDSTONE), 0.1F);
 
-        this.addCompressing(ModItems.gold_dust, new ItemStack(Items.GOLD_INGOT), 0.1F);
-        this.addCompressing(ModItems.iron_dust, new ItemStack(Items.IRON_INGOT), 0.1F);
-        this.addCompressing(ModItems.obsidian_dust, new ItemStack(Blocks.OBSIDIAN), 0.1F);
-        this.addCompressing(ModItems.diamond_dust, new ItemStack(Items.DIAMOND), 0.1F);
-        this.addCompressing(ModItems.emerald_dust, new ItemStack(Items.EMERALD), 0.1F);
-        this.addCompressing(ModItems.lapis_dust, new ItemStack(Items.DYE, 1,4), 0.1F);
+        this.addCompressingRecipe(ModItems.gold_dust, new ItemStack(Items.GOLD_INGOT), 0.1F);
+        this.addCompressingRecipe(ModItems.iron_dust, new ItemStack(Items.IRON_INGOT), 0.1F);
+        this.addCompressingRecipe(ModItems.obsidian_dust, new ItemStack(Blocks.OBSIDIAN), 0.1F);
+        this.addCompressingRecipe(ModItems.diamond_dust, new ItemStack(Items.DIAMOND), 0.1F);
+        this.addCompressingRecipe(ModItems.emerald_dust, new ItemStack(Items.EMERALD), 0.1F);
+        this.addCompressingRecipe(ModItems.lapis_dust, new ItemStack(Items.DYE, 1,4), 0.1F);
 
-        this.addCompressingRecipeForBlock(Blocks.COAL_BLOCK, new ItemStack(Items.DIAMOND), 1.0F);
+        this.addCompressingRecipe(Blocks.COAL_BLOCK, new ItemStack(Items.DIAMOND), 1.0F);
     }
 
-    public void addCompressingRecipeForBlock(Block input, ItemStack stack, float experience) {
-        this.addCompressing(Item.getItemFromBlock(input), stack, experience);
+    public void addCompressingRecipe(Block input, ItemStack stack, float experience) {
+        this.addCompressingRecipe(Item.getItemFromBlock(input), stack, experience);
     }
 
-    public void addCompressing(Item input, ItemStack stack, float experience) {
+    public void addCompressingRecipe(Item input, ItemStack stack, float experience) {
         this.addCompressingRecipe(new ItemStack(input, 1, 32767), stack, experience);
     }
 
@@ -84,5 +85,15 @@ public class CompressorRecipes extends MachineRecipeManager {
         }
 
         return stack.getItem().getSmeltingExperience(stack);
+    }
+
+    public int getCompressingTime(ItemStack stack) {
+        for (Map.Entry<ItemStack, Integer> entry : this.time_list.entrySet()) {
+            if (this.compareItemStacks(stack, entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+
+        return 200;
     }
 }

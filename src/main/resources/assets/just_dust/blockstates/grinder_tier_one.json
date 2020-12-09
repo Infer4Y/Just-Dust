@@ -1,0 +1,27 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "just_dust:grinder_tier_one",
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "facing": {
+            "north": { "y": 180 },
+            "south": { "y": 0 },
+            "west": {"y": 90 },
+            "east": { "y": 270 }
+        },
+        "powered": {
+            "false": {},
+            "true": {
+                "textures": {
+                    "blade_wheel_full": "just_dust:items/parts/blade_wheel_full"
+                }
+            }
+        },
+        "inventory": {
+            "model": "just_dust:grinder_tier_one",
+            "transform": "forge:default-block"
+        }
+    }
+}
