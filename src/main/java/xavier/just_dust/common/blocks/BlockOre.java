@@ -11,10 +11,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import xavier.just_dust.common.utils.DustGlobalVariables;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class BlockOre extends BaseBlocks {
-    protected List<ItemStack> drop;
+    protected List<ItemStack> drop = new LinkedList<>();
     protected float expDrop = 0f;
     public BlockOre(String name, int toolHarvestLevel, Item drop) {
         super(Material.ROCK, name);
