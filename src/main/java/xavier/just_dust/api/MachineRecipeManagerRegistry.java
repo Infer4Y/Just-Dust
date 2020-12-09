@@ -10,6 +10,7 @@ import net.minecraftforge.registries.IForgeRegistryInternal;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryManager;
 import xavier.just_dust.JustDust;
+import xavier.just_dust.api.recipes.ChargingRecipes;
 import xavier.just_dust.api.recipes.CompressorRecipes;
 import xavier.just_dust.api.recipes.GrinderRecipes;
 import xavier.just_dust.api.recipes.MachineRecipeManager;
@@ -21,6 +22,7 @@ import java.util.List;
 public class MachineRecipeManagerRegistry {
     public static final MachineRecipeManager GRINDER = GrinderRecipes.instance();
     public static final MachineRecipeManager COMPRESSOR = CompressorRecipes.instance();
+    public static final MachineRecipeManager CHARGER = ChargingRecipes.instance();
 
     public static List<MachineRecipeManager> MACHINE_RECIPES;
 
@@ -28,6 +30,7 @@ public class MachineRecipeManagerRegistry {
         MACHINE_RECIPES = new ArrayList();
         MACHINE_RECIPES.add(GRINDER);
         MACHINE_RECIPES.add(COMPRESSOR);
+        MACHINE_RECIPES.add(CHARGER);
     }
 
 

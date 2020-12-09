@@ -41,6 +41,9 @@ tile.cable_energy_tier_two.name=Energy Cable Tier II
 container.compressor_tier_one=Compressor Tier I
 container.grinder_tier_one=Grinder Tier I
 
+container.compressor_tier_two=Compressor Tier II
+container.grinder_tier_two=Grinder Tier II
+
 itemGroup.parts_just_dust=Materials
 itemGroup.blocks_just_dust=Block
 

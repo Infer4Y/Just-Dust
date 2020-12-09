@@ -9,11 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import xavier.just_dust.common.utils.DustGlobalVariables;
 
 import java.util.List;
 
 public class BlockOre extends BaseBlocks {
     protected List<ItemStack> drop;
+    protected float expDrop = 0f;
     public BlockOre(String name, int toolHarvestLevel, Item drop) {
         super(Material.ROCK, name);
         setHardness(0.3f);
@@ -48,9 +50,14 @@ public class BlockOre extends BaseBlocks {
             this.drop.add(new ItemStack(drop));
     }
 
+    public BlockOre setExpDrop(float expDrop){
+        this.expDrop=expDrop;
+        return this;
+    }
+
     @Override
     public void dropXpOnBlockBreak(World worldIn, BlockPos pos, int amount) {
-        super.dropXpOnBlockBreak(worldIn, pos, amount);
+        super.dropXpOnBlockBreak(worldIn, pos, Math.round(DustGlobalVariables.RANDOM.nextFloat()*expDrop+ expDrop));
     }
 
     @Override

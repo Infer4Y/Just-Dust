@@ -7,22 +7,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xavier.just_dust.common.containers.ContainerCharger;
 import xavier.just_dust.common.containers.ContainerCompressor;
 import xavier.just_dust.common.containers.ContainerGrinder;
-import xavier.just_dust.common.tile_entities.TileEntityCompressorTierOne;
-import xavier.just_dust.common.tile_entities.TileEntityCompressorTierTwo;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierOne;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierTwo;
+import xavier.just_dust.common.tile_entities.*;
 
 public class GuiHandler implements IGuiHandler {
     private static final int COMPRESSOR_TIER_ONE_ID = 0;
     private static final int GRINDER_TIER_ONE_ID = 1;
     private static final int COMPRESSOR_TIER_TWO_ID = 3;
     private static final int GRINDER_TIER_TWO_ID = 4;
-    private static final int COMPRESSOR_TIER_THREE_ID = 3;
-    private static final int GRINDER_TIER_THREE_ID = 4;
-    private static final int COMPRESSOR_TIER_FOUR_ID = 3;
-    private static final int GRINDER_TIER_FOUR_ID = 4;
+    private static final int COMPRESSOR_TIER_THREE_ID = 5;
+    private static final int GRINDER_TIER_THREE_ID = 6;
+    private static final int COMPRESSOR_TIER_FOUR_ID = 7;
+    private static final int GRINDER_TIER_FOUR_ID = 8;
+    private static final int CHARGER_TIER_ONE_ID = 9;
     public static int getCompressorTierOneGuiID() {
         return COMPRESSOR_TIER_ONE_ID;
     }
@@ -47,6 +46,9 @@ public class GuiHandler implements IGuiHandler {
     public static int getGrinderTierFourGuiID() {
         return GRINDER_TIER_FOUR_ID;
     }
+    public static int getChargerTierOneID() {
+        return CHARGER_TIER_ONE_ID;
+    }
 
 
     @Override
@@ -68,6 +70,11 @@ public class GuiHandler implements IGuiHandler {
         if (te instanceof TileEntityGrinderTierTwo){
             TileEntityGrinderTierTwo tileEntityGrinderTierTwo = (TileEntityGrinderTierTwo) te;
             return new ContainerGrinder(player.inventory, tileEntityGrinderTierTwo);
+        }
+
+        if (te instanceof TileEntityChargerTierOne){
+            TileEntityChargerTierOne tileEntityChargerTierOne = (TileEntityChargerTierOne) te;
+            return new ContainerCharger(player.inventory, tileEntityChargerTierOne);
         }
 
         return null;
@@ -95,6 +102,11 @@ public class GuiHandler implements IGuiHandler {
         if (te instanceof TileEntityGrinderTierOne){
             TileEntityGrinderTierTwo tileEntityGrinderTierTwo = (TileEntityGrinderTierTwo) te;
             return new GUIGrinderTierTwo(player.inventory, tileEntityGrinderTierTwo);
+        }
+
+        if (te instanceof TileEntityChargerTierOne){
+            TileEntityChargerTierOne tileEntityChargerTierOne = (TileEntityChargerTierOne) te;
+            return new GUIChargerTierOne(player.inventory, tileEntityChargerTierOne);
         }
 
         return null;
