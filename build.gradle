@@ -54,3 +54,5 @@ processResources {
         exclude "mcmod.info"
     }
 }
+//Comment on build, leave in for testing in ide.
+sourceSets { main { output.resourcesDir = output.classesDir } }

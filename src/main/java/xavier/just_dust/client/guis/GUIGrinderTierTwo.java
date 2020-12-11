@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import xavier.just_dust.common.containers.ContainerGrinder;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierOne;
 import xavier.just_dust.common.tile_entities.TileEntityGrinderTierTwo;
 
 public class GUIGrinderTierTwo extends GuiContainer {
@@ -50,7 +49,7 @@ public class GUIGrinderTierTwo extends GuiContainer {
         int j = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 
-        if (TileEntityGrinderTierOne.isRunning(this.tileFurnace)) {
+        if (TileEntityGrinderTierTwo.isRunning(this.tileFurnace)) {
             int k = this.getBurnLeftScaled(13);
             this.drawTexturedModalRect(i + 56, j + 36 + 12 - k, 176, 12 - k, 14, k + 1);
         }

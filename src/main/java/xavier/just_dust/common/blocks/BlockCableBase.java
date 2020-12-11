@@ -25,8 +25,8 @@ import java.util.stream.Stream;
 
 public abstract class BlockCableBase extends  BaseBlocks {
 
-    public static final float PIPE_MIN_POS = 3f/8f;
-    public static final float PIPE_MAX_POS = 3f/4f;
+    public static final float PIPE_MIN_POS = 5f/16f;
+    public static final float PIPE_MAX_POS = 11f/16f;
 
     public static final ImmutableList<IProperty<Boolean>> CONNECTED_PROPERTIES = ImmutableList.copyOf(
             Stream.of(EnumFacing.VALUES)

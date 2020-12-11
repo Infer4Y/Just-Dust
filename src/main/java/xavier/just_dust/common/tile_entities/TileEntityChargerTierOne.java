@@ -18,21 +18,25 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.api.energy.MachineFuel;
+import xavier.just_dust.api.recipes.ChargingRecipes;
 import xavier.just_dust.api.recipes.CompressorRecipes;
+import xavier.just_dust.common.blocks.BlockChargerTierOne;
 import xavier.just_dust.common.blocks.BlockCompressorTierOne;
+import xavier.just_dust.common.containers.ContainerCharger;
 import xavier.just_dust.common.containers.ContainerCompressor;
+import xavier.just_dust.common.slots.SlotChargerFuel;
 import xavier.just_dust.common.slots.SlotCompressorFuel;
 
 public class TileEntityChargerTierOne extends TileEntityLockable implements ITickable, ISidedInventory {
     private static final int[] SLOTS_TOP = new int[] {0};
     private static final int[] SLOTS_BOTTOM = new int[] {2,1};
     private static final int[] SLOTS_SIDES = new int[] {1};
-    private NonNullList<ItemStack> compressorItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);;
-    private int compressorRunTime;
+    private NonNullList<ItemStack> chargerItemStacks = NonNullList.withSize(3, ItemStack.EMPTY);;
+    private int chargerRunTime;
     private int currentItemRunTime;
-    private int compressingTime;
+    private int chargerTime;
     private int totalRunTime;
-    private String compressorCustomName;
+    private String chargerCustomName;
 
     @Override
     public void onLoad() {
@@ -41,11 +45,11 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     }
 
     public int getSizeInventory() {
-        return this.compressorItemStacks.size();
+        return this.chargerItemStacks.size();
     }
 
     public boolean isEmpty() {
-        for (ItemStack itemstack : this.compressorItemStacks) {
+        for (ItemStack itemstack : this.chargerItemStacks) {
             if (!itemstack.isEmpty()) {
                 return false;
             }
@@ -55,21 +59,21 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     }
 
     public ItemStack getStackInSlot(int index) {
-        return this.compressorItemStacks.get(index);
+        return this.chargerItemStacks.get(index);
     }
 
     public ItemStack decrStackSize(int index, int count) {
-        return ItemStackHelper.getAndSplit(this.compressorItemStacks, index, count);
+        return ItemStackHelper.getAndSplit(this.chargerItemStacks, index, count);
     }
 
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.compressorItemStacks, index);
+        return ItemStackHelper.getAndRemove(this.chargerItemStacks, index);
     }
 
     public void setInventorySlotContents(int index, ItemStack stack) {
-        ItemStack itemstack = this.compressorItemStacks.get(index);
+        ItemStack itemstack = this.chargerItemStacks.get(index);
         boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
-        this.compressorItemStacks.set(index, stack);
+        this.chargerItemStacks.set(index, stack);
 
         if (stack.getCount() > this.getInventoryStackLimit()) {
             stack.setCount(this.getInventoryStackLimit());
@@ -78,50 +82,50 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         if (index == 0 && !flag)
         {
             this.totalRunTime = this.getCookTime(stack);
-            this.compressingTime = 0;
+            this.chargerTime = 0;
             this.markDirty();
         }
     }
 
     public String getName() {
-        return this.hasCustomName() ? this.compressorCustomName : "container.compressor_tier_one";
+        return this.hasCustomName() ? this.chargerCustomName : "container.charger_tier_one";
     }
 
     public boolean hasCustomName() {
-        return this.compressorCustomName != null && !this.compressorCustomName.isEmpty();
+        return this.chargerCustomName != null && !this.chargerCustomName.isEmpty();
     }
 
     public void setCustomInventoryName(String name) {
-        this.compressorCustomName = name;
+        this.chargerCustomName = name;
     }
 
     public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);
-        this.compressorItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.compressorItemStacks);
-        this.compressorRunTime = compound.getInteger("RunTime");
-        this.compressingTime = compound.getInteger("CompressingTime");
-        this.totalRunTime = compound.getInteger("CompressingTimeTotal");
-        this.currentItemRunTime = getItemRunTime(this.compressorItemStacks.get(1));
+        this.chargerItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.chargerItemStacks);
+        this.chargerRunTime = compound.getInteger("RunTime");
+        this.chargerTime = compound.getInteger("ChargerTime");
+        this.totalRunTime = compound.getInteger("ChargerTimeTotal");
+        this.currentItemRunTime = getItemRunTime(this.chargerItemStacks.get(1));
 
         if (compound.hasKey("CustomName", 8))
         {
-            this.compressorCustomName = compound.getString("CustomName");
+            this.chargerCustomName = compound.getString("CustomName");
         }
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
-        compound.setInteger("RunTime", (short)this.compressorRunTime);
-        compound.setInteger("CompressingTime", (short)this.compressingTime);
-        compound.setInteger("CompressingTimeTotal", (short)this.totalRunTime);
-        ItemStackHelper.saveAllItems(compound, this.compressorItemStacks);
+        compound.setInteger("RunTime", (short)this.chargerRunTime);
+        compound.setInteger("ChargerTime", (short)this.chargerTime);
+        compound.setInteger("ChargerTimeTotal", (short)this.totalRunTime);
+        ItemStackHelper.saveAllItems(compound, this.chargerItemStacks);
 
         if (this.hasCustomName())
         {
-            compound.setString("CustomName", this.compressorCustomName);
+            compound.setString("CustomName", this.chargerCustomName);
         }
 
         return compound;
@@ -132,7 +136,7 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     }
 
     public boolean isRunning() {
-        return this.compressorRunTime > 0;
+        return this.chargerRunTime > 0;
     }
 
     @SideOnly(Side.CLIENT)
@@ -144,44 +148,44 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         boolean flag = this.isRunning();
         boolean flag1 = false;
         if (!this.world.isRemote) {
-            if (this.isRunning() || !this.compressorItemStacks.get(0).isEmpty()) {
-                if (!this.isRunning() && this.canCompressing()) {
-                    this.currentItemRunTime = this.compressorRunTime = getItemRunTime((ItemStack) this.compressorItemStacks.get(1));
+            if (this.isRunning() || !this.chargerItemStacks.get(0).isEmpty()) {
+                if (!this.isRunning() && this.canCharge()) {
+                    this.currentItemRunTime = this.chargerRunTime = getItemRunTime((ItemStack) this.chargerItemStacks.get(1));
 
                     if (this.isRunning()) {
                         flag1 = true;
 
-                        if (this.compressorItemStacks.get(1) != null) {
-                            ((ItemStack) this.compressorItemStacks.get(1)).shrink(1);
+                        if (this.chargerItemStacks.get(1) != null) {
+                            ((ItemStack) this.chargerItemStacks.get(1)).shrink(1);
 
-                            if (((ItemStack) this.compressorItemStacks.get(1)).getCount() == 0) {
-                                this.compressorItemStacks.set(1, ((ItemStack) compressorItemStacks.get(1)).getItem().getContainerItem((ItemStack) compressorItemStacks.get(1)));
+                            if (((ItemStack) this.chargerItemStacks.get(1)).getCount() == 0) {
+                                this.chargerItemStacks.set(1, ((ItemStack) chargerItemStacks.get(1)).getItem().getContainerItem((ItemStack) chargerItemStacks.get(1)));
                             }
                         }
                     }
                 }
 
-                if (this.isRunning() && this.canCompressing()) {
-                    ++this.compressingTime;
+                if (this.isRunning() && this.canCharge()) {
+                    ++this.chargerTime;
 
-                    if (this.compressingTime == this.totalRunTime) {
-                        this.compressingTime = 0;
-                        this.totalRunTime = this.getCookTime((ItemStack) this.compressorItemStacks.get(0));
-                        this.compressItem();
+                    if (this.chargerTime == this.totalRunTime) {
+                        this.chargerTime = 0;
+                        this.totalRunTime = this.getCookTime((ItemStack) this.chargerItemStacks.get(0));
+                        this.chargerItem();
                         flag1 = true;
                     }
 
-                    --this.compressorRunTime;
+                    --this.chargerRunTime;
                 } else {
-                    this.compressingTime = 0;
+                    this.chargerTime = 0;
                 }
-            } else if (!this.isRunning() && this.compressingTime > 0) {
-                this.compressingTime = MathHelper.clamp(this.compressingTime - 2, 0, this.totalRunTime);
+            } else if (!this.isRunning() && this.chargerTime > 0) {
+                this.chargerTime = MathHelper.clamp(this.chargerTime - 2, 0, this.totalRunTime);
             }
 
             if (flag != this.isRunning()) {
                 flag1 = true;
-                BlockCompressorTierOne.setState(this.isRunning(), this.world, this.pos);
+                BlockChargerTierOne.setState(this.isRunning(), this.world, this.pos);
             }
         }
 
@@ -191,19 +195,19 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     }
 
     public int getCookTime(ItemStack stack) {
-        return Math.round(CompressorRecipes.instance().getCompressingTime(stack) * 1.5f);
+        return Math.round(ChargingRecipes.instance().getChargingTime(stack) * 1.5f);
     }
 
-    private boolean canCompressing() {
-        if (((ItemStack)this.compressorItemStacks.get(0)).isEmpty()) {
+    private boolean canCharge() {
+        if (((ItemStack)this.chargerItemStacks.get(0)).isEmpty()) {
             return false;
         } else {
-            ItemStack itemstack = CompressorRecipes.instance().getCompressingResult(this.compressorItemStacks.get(0));
+            ItemStack itemstack = ChargingRecipes.instance().getChargingResult(this.chargerItemStacks.get(0));
 
             if (itemstack.isEmpty()) {
                 return false;
             } else {
-                ItemStack itemstack1 = this.compressorItemStacks.get(2);
+                ItemStack itemstack1 = this.chargerItemStacks.get(2);
 
                 if (itemstack1.isEmpty()) {
                     return true;
@@ -219,14 +223,14 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         }
     }
 
-    public void compressItem() {
-        if (this.canCompressing()) {
-            ItemStack itemstack = this.compressorItemStacks.get(0);
-            ItemStack itemstack1 = CompressorRecipes.instance().getCompressingResult(itemstack);
-            ItemStack itemstack2 = this.compressorItemStacks.get(2);
+    public void chargerItem() {
+        if (this.canCharge()) {
+            ItemStack itemstack = this.chargerItemStacks.get(0);
+            ItemStack itemstack1 = ChargingRecipes.instance().getChargingResult(itemstack);
+            ItemStack itemstack2 = this.chargerItemStacks.get(2);
 
             if (itemstack2.isEmpty()) {
-                this.compressorItemStacks.set(2, itemstack1.copy());
+                this.chargerItemStacks.set(2, itemstack1.copy());
             } else if (itemstack2.getItem() == itemstack1.getItem()) {
                 itemstack2.grow(itemstack1.getCount());
             }
@@ -260,8 +264,8 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         } else if (index != 1) {
             return true;
         } else {
-            ItemStack itemstack = ((ItemStack)this.compressorItemStacks.get(1));
-            return isItemFuel(stack) || SlotCompressorFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
+            ItemStack itemstack = ((ItemStack)this.chargerItemStacks.get(1));
+            return isItemFuel(stack) || SlotChargerFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
         }
     }
 
@@ -285,12 +289,12 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     }
 
     public String getGuiID() {
-        return "just_dust:compressor_tier_one";
+        return "just_dust:charger_tier_one";
     }
 
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
-        return new ContainerCompressor(playerInventory, this);
+        return new ContainerCharger(playerInventory, this);
     }
 
     public int getField(int id)
@@ -298,11 +302,11 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         switch (id)
         {
             case 0:
-                return this.compressorRunTime;
+                return this.chargerRunTime;
             case 1:
                 return this.currentItemRunTime;
             case 2:
-                return this.compressingTime;
+                return this.chargerTime;
             case 3:
                 return this.totalRunTime;
             default:
@@ -315,13 +319,13 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         switch (id)
         {
             case 0:
-                this.compressorRunTime = value;
+                this.chargerRunTime = value;
                 break;
             case 1:
                 this.currentItemRunTime = value;
                 break;
             case 2:
-                this.compressingTime = value;
+                this.chargerTime = value;
                 break;
             case 3:
                 this.totalRunTime = value;
@@ -333,8 +337,8 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     }
 
     public void clear() {
-        for (int i = 0; i < this.compressorItemStacks.size(); ++i) {
-            this.compressorItemStacks.set(i, ItemStack.EMPTY);
+        for (int i = 0; i < this.chargerItemStacks.size(); ++i) {
+            this.chargerItemStacks.set(i, ItemStack.EMPTY);
         }
     }
 

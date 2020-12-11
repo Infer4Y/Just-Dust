@@ -1,6 +1,7 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "textures": {
+        "particle": "#death_dust_block",
         "death_dust_block": "just_dust:blocks/death_dust_block",
         "blade_wheel_full": "just_dust:items/parts/blade_wheel_full"
     },
@@ -21,8 +22,8 @@
             "scale": [ 1, 1, 1 ]
         },
         "head": {
-            "rotation": [ 0, 180, 0 ],
-            "translation": [ 0, 0, 0 ],
+            "rotation": [ 180, 180, 0 ],
+            "translation": [ 0, 1, 0 ],
             "scale": [ 1, 1, 1 ]
         },
         "firstperson_righthand": {

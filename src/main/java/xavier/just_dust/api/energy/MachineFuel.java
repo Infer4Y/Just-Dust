@@ -6,6 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import xavier.just_dust.common.blocks.ModBlocks;
 import xavier.just_dust.common.items.ModItems;
 
 public class MachineFuel {
@@ -34,10 +35,14 @@ public class MachineFuel {
             if (block == Blocks.REDSTONE_ORE) {
                 return 20000;
             }
+
+            if (block == ModBlocks.energy_dust_block) {
+                return 32000;
+            }
         }
         if (item == Items.REDSTONE) return 1600;
         if (item == ModItems.energy_dust) return 1600;
-        if (item == ModItems.energy_dust_compressed) return 1600*4;
+        if (item == ModItems.energy_dust_compressed) return 3200;
         return 0;
     }
 }

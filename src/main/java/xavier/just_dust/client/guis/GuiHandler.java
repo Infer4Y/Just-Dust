@@ -15,13 +15,13 @@ import xavier.just_dust.common.tile_entities.*;
 public class GuiHandler implements IGuiHandler {
     private static final int COMPRESSOR_TIER_ONE_ID = 0;
     private static final int GRINDER_TIER_ONE_ID = 1;
-    private static final int COMPRESSOR_TIER_TWO_ID = 3;
-    private static final int GRINDER_TIER_TWO_ID = 4;
-    private static final int COMPRESSOR_TIER_THREE_ID = 5;
-    private static final int GRINDER_TIER_THREE_ID = 6;
-    private static final int COMPRESSOR_TIER_FOUR_ID = 7;
-    private static final int GRINDER_TIER_FOUR_ID = 8;
-    private static final int CHARGER_TIER_ONE_ID = 9;
+    private static final int COMPRESSOR_TIER_TWO_ID = 2;
+    private static final int GRINDER_TIER_TWO_ID = 3;
+    private static final int COMPRESSOR_TIER_THREE_ID = 4;
+    private static final int GRINDER_TIER_THREE_ID = 5;
+    private static final int COMPRESSOR_TIER_FOUR_ID = 6;
+    private static final int GRINDER_TIER_FOUR_ID = 7;
+    private static final int CHARGER_TIER_ONE_ID = 8;
     public static int getCompressorTierOneGuiID() {
         return COMPRESSOR_TIER_ONE_ID;
     }
@@ -99,7 +99,7 @@ public class GuiHandler implements IGuiHandler {
             return new GUICompressorTierTwo(player.inventory, tileEntityCompressorTierTwo);
         }
 
-        if (te instanceof TileEntityGrinderTierOne){
+        if (te instanceof TileEntityGrinderTierTwo){
             TileEntityGrinderTierTwo tileEntityGrinderTierTwo = (TileEntityGrinderTierTwo) te;
             return new GUIGrinderTierTwo(player.inventory, tileEntityGrinderTierTwo);
         }

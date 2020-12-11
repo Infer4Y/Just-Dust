@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "death_dust_block": "just_dust:blocks/death_dust_block",
+            "death_dust_block": "minecraft:blocks/iron_block",
             "blade_wheel_full": "just_dust:items/parts/blade_wheel0"
         },
         "model": "just_dust:grinder_tier_one",

@@ -18,11 +18,8 @@ import xavier.just_dust.api.recipes.GrinderRecipes;
 import xavier.just_dust.common.blocks.ModBlocks;
 import xavier.just_dust.client.guis.GuiHandler;
 import xavier.just_dust.common.items.ModItems;
-import xavier.just_dust.common.tile_entities.TileEntityCompressorTierTwo;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierOne;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierTwo;
+import xavier.just_dust.common.tile_entities.*;
 import xavier.just_dust.common.utils.ore.OreDictionaryDusts;
-import xavier.just_dust.common.tile_entities.TileEntityCompressorTierOne;
 
 
 public class CommonProxy {
@@ -53,6 +50,7 @@ public class CommonProxy {
             GameRegistry.registerTileEntity(TileEntityGrinderTierOne.class , JustDust.MODID+":grinder_tier_one");
             GameRegistry.registerTileEntity(TileEntityCompressorTierTwo.class , JustDust.MODID+":compressor_tier_two");
             GameRegistry.registerTileEntity(TileEntityGrinderTierTwo.class , JustDust.MODID+":grinder_tier_two");
+            GameRegistry.registerTileEntity(TileEntityChargerTierOne.class , JustDust.MODID+":charger_tier_one");
         }
 
         @SubscribeEvent
@@ -66,8 +64,5 @@ public class CommonProxy {
             ModItems.registerModels();
             ModBlocks.registerModels();
         }
-
-
-
     }
 }
