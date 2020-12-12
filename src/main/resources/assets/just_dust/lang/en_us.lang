@@ -24,6 +24,19 @@ item.water_dust_compressed.name=Water Dust Compressed
 
 item.blade_wheel.name=Blade Wheel
 
+item.energy_cell_tier_one.name=Energy Cell Tier I
+item.energy_cell_tier_two.name=Energy Cell Tier II
+item.energy_cell_tier_three.name=Energy Cell Tier III
+item.energy_cell_tier_four.name=Energy Cell Tier IV
+item.energy_cell_tier_five.name=Energy Cell Tier V
+item.energy_cell_tier_six.name=Energy Cell Tier VI
+item.energy_cell_tier_seven.name=Energy Cell Tier VII
+item.energy_cell_tier_eight.name=Energy Cell Tier VIII
+
+item.gun_dual_barrel.name=Dual Barrel Gun
+
+item.saw_powered_tier_one.name=Power Saw Tier I
+
 tile.death_dust_block.name=Death Dust Block
 tile.earth_dust_block.name=Earth Dust Block
 tile.energy_dust_block.name=Energy Dust Block
@@ -33,12 +46,14 @@ tile.matter_dust_block.name=Matter Dust Block
 tile.water_dust_block.name=Water Dust Block
 
 tile.compressor_tier_one.name=Compressor Tier I
+tile.charger_tier_one.name=Charger Tier I
 tile.grinder_tier_one.name=Grinder Tier I
 
 tile.cable_energy_tier_one.name=Energy Cable Tier I
 tile.cable_energy_tier_two.name=Energy Cable Tier II
 
 container.compressor_tier_one=Compressor Tier I
+container.charger_tier_one=Charger Tier I
 container.grinder_tier_one=Grinder Tier I
 
 container.compressor_tier_two=Compressor Tier II

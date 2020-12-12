@@ -1,4 +1,4 @@
-package xavier.just_dust.common.blocks;
+package xavier.just_dust.common.blocks.cables;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
@@ -17,13 +17,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.JustDust;
+import xavier.just_dust.common.blocks.BaseBlocks;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class BlockCableBase extends  BaseBlocks {
+public abstract class BlockCableBase extends BaseBlocks {
 
     public static final float PIPE_MIN_POS = 5f/16f;
     public static final float PIPE_MAX_POS = 11f/16f;

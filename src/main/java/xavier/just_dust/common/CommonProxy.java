@@ -3,6 +3,7 @@ package xavier.just_dust.common;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -43,6 +44,7 @@ public class CommonProxy {
 
     @Mod.EventBusSubscriber
     public static class RegistrationHandler {
+
         @SubscribeEvent
         public static void registerBlocks(RegistryEvent.Register<Block> event) {
             ModBlocks.register(event.getRegistry());

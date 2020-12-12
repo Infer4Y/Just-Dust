@@ -1,4 +1,4 @@
-package xavier.just_dust.common.blocks;
+package xavier.just_dust.common.blocks.machines;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -22,49 +22,50 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.JustDust;
 import xavier.just_dust.client.guis.GuiHandler;
+import xavier.just_dust.common.blocks.ModBlocks;
 import xavier.just_dust.common.creative_tabs.DustTabs;
-import xavier.just_dust.common.tile_entities.TileEntityChargerTierOne;
+import xavier.just_dust.common.tile_entities.TileEntityCompressorTierTwo;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockChargerTierOne extends BlockContainer {
+public class BlockCompressorTierTwo extends BlockContainer {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool POWERED = PropertyBool.create("powered");
     protected String name;
     private static boolean keepInventory;
 
-    public BlockChargerTierOne() {
+    public BlockCompressorTierTwo() {
         super(Material.IRON);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false));
-        setUnlocalizedName("charger_tier_one");
-        setRegistryName("charger_tier_one");
-        name = "charger_tier_one";
+        setUnlocalizedName("compressor_tier_two");
+        setRegistryName("compressor_tier_two");
+        name = "compressor_tier_two";
         setCreativeTab(DustTabs.MACHINE_CREATIVE_TAB);
     }
 
     @Nullable
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(ModBlocks.charger_tier_one);
+        return Item.getItemFromBlock(ModBlocks.compressor_tier_two);
     }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityChargerTierOne();
+        return new TileEntityCompressorTierTwo();
     }
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
-            playerIn.openGui(JustDust.instance, GuiHandler.getChargerTierOneID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+            playerIn.openGui(JustDust.instance, GuiHandler.getCompressorTierTwoGuiID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
             return true;
         }
         return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
-    public TileEntityChargerTierOne createTileEntity(World world, IBlockState state) {
-        return new TileEntityChargerTierOne();
+    public TileEntityCompressorTierTwo createTileEntity(World world, IBlockState state) {
+        return new TileEntityCompressorTierTwo();
     }
 
     @Override
@@ -73,9 +74,9 @@ public class BlockChargerTierOne extends BlockContainer {
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityChargerTierOne)
+            if (tileentity instanceof TileEntityCompressorTierTwo)
             {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityChargerTierOne)tileentity);
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityCompressorTierTwo)tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
         }
@@ -96,9 +97,9 @@ public class BlockChargerTierOne extends BlockContainer {
         {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityChargerTierOne)
+            if (tileentity instanceof TileEntityCompressorTierTwo)
             {
-                ((TileEntityChargerTierOne)tileentity).setCustomInventoryName(stack.getDisplayName());
+                ((TileEntityCompressorTierTwo)tileentity).setCustomInventoryName(stack.getDisplayName());
             }
         }
     }
@@ -108,8 +109,8 @@ public class BlockChargerTierOne extends BlockContainer {
         TileEntity tileentity = worldIn.getTileEntity(pos);
         keepInventory = true;
 
-        worldIn.setBlockState(pos, ModBlocks.charger_tier_one.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
-        worldIn.setBlockState(pos, ModBlocks.charger_tier_one.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
+        worldIn.setBlockState(pos, ModBlocks.compressor_tier_two.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
+        worldIn.setBlockState(pos, ModBlocks.compressor_tier_two.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
 
 
         keepInventory = false;

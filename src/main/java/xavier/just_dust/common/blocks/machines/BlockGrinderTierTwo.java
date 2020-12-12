@@ -1,4 +1,4 @@
-package xavier.just_dust.common.blocks;
+package xavier.just_dust.common.blocks.machines;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -22,6 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.JustDust;
 import xavier.just_dust.client.guis.GuiHandler;
+import xavier.just_dust.common.blocks.ModBlocks;
 import xavier.just_dust.common.creative_tabs.DustTabs;
 import xavier.just_dust.common.tile_entities.TileEntityGrinderTierTwo;
 

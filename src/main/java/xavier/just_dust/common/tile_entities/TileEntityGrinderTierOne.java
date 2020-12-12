@@ -14,19 +14,14 @@ import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.datafix.DataFixer;
-import net.minecraft.util.datafix.FixTypes;
-import net.minecraft.util.datafix.walkers.ItemStackDataLists;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.api.energy.MachineFuel;
 import xavier.just_dust.api.recipes.GrinderRecipes;
-import xavier.just_dust.common.blocks.BlockGrinderTierOne;
+import xavier.just_dust.common.blocks.machines.BlockGrinderTierOne;
 import xavier.just_dust.common.containers.ContainerGrinder;
 import xavier.just_dust.common.slots.SlotGrinderFuel;
-
-import javax.annotation.Nullable;
 
 public class TileEntityGrinderTierOne extends TileEntityLockable implements ITickable, ISidedInventory {
     private static final int[] SLOTS_TOP = new int[] {0};

@@ -15,11 +15,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
 
-public class TESRGrinderTierOne extends TileEntitySpecialRenderer<TileEntityGrinderTierOne> {
+public class TESRGrinderTierTwo extends TileEntitySpecialRenderer<TileEntityGrinderTierTwo> {
 
 
     @Override
-    public void render(TileEntityGrinderTierOne te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    public void render(TileEntityGrinderTierTwo te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         //super.render(te, x, y, z, partialTicks, destroyStage, alpha);
         ItemStack stack = te.getStackInSlot(0);
         if (!stack.isEmpty()) {

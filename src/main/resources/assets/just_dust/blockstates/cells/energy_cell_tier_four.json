@@ -1,0 +1,14 @@
+{
+  "defaults": {
+    "textures": {
+      "energy_cell_empty": "just_dust:items/cells/energy_cell_empty"
+    },
+    "model": "just_dust:cell_base"
+  },
+  "variants": {
+    "inventory": {
+      "model": "just_dust:cell_base",
+      "transform": "forge:default-block"
+    }
+  }
+}

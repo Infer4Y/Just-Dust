@@ -31,7 +31,12 @@ public class DustOreGenerator implements IWorldGenerator {
     }
 
     private void generateOverworld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        generateOre(ModBlocks.fire_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, 4 + random.nextInt(4), 6);
+        generateOre(ModBlocks.fire_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 32, 4 + random.nextInt(4), 6);
+        generateOre(ModBlocks.earth_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, 4 + random.nextInt(4), 6);
+        generateOre(ModBlocks.water_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 33, 64, 4 + random.nextInt(4), 6);
+        generateOre(ModBlocks.death_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 5, 17, 4 + random.nextInt(4), 6);
+        generateOre(ModBlocks.life_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 18, 64, 4 + random.nextInt(4), 6);
+        generateOre(ModBlocks.matter_dust_ore.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 16, 64, 4 + random.nextInt(4), 6);
     }
 
     private void generateHell(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {

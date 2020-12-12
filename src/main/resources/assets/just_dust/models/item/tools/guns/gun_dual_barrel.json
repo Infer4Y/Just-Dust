@@ -1,0 +1,9 @@
+{
+  "parent": "just_dust:item/tools/guns/dual_barrel_base",
+  "textures": {
+    "earth_dust_block": "just_dust:blocks/earth_dust_block",
+    "death_dust_block": "just_dust:blocks/death_dust_block",
+    "energy_dust_block": "just_dust:blocks/energy_dust_block",
+    "fire_dust_block": "just_dust:blocks/fire_dust_block"
+  }
+}

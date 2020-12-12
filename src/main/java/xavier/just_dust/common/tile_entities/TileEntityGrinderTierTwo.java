@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.api.energy.MachineFuel;
 import xavier.just_dust.api.recipes.GrinderRecipes;
-import xavier.just_dust.common.blocks.BlockGrinderTierTwo;
+import xavier.just_dust.common.blocks.machines.BlockGrinderTierTwo;
 import xavier.just_dust.common.containers.ContainerGrinder;
 import xavier.just_dust.common.slots.SlotGrinderFuel;
 

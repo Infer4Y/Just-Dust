@@ -1,0 +1,17 @@
+{
+  "defaults": {
+    "textures": {
+      "blade_wheel0": "just_dust:items/parts/blade_wheel0",
+      "death_dust_block": "just_dust:blocks/death_dust_block",
+      "energy_dust_block": "just_dust:blocks/energy_dust_block",
+      "fire_dust_block": "just_dust:blocks/fire_dust_block"
+    },
+    "model": "just_dust:saw_base"
+  },
+  "variants": {
+    "inventory": {
+      "model": "just_dust:saw_base",
+      "transform": "forge:default-block"
+    }
+  }
+}

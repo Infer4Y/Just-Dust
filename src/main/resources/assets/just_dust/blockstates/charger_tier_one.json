@@ -1,0 +1,26 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "death_dust_block": "minecraft:blocks/iron_block"
+        },
+        "model": "just_dust:charger_base",
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "facing": {
+            "north": {},
+            "south": { "y": 180 },
+            "west": {"y": 270 },
+            "east": { "y": 90 }
+        },
+        "powered": {
+            "false": {},
+            "true": {}
+        },
+        "inventory": {
+            "model": "just_dust:charger_base",
+            "transform": "forge:default-block"
+        }
+    }
+}
