@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.api.energy.MachineFuel;
 import xavier.just_dust.api.recipes.CompressorRecipes;
-import xavier.just_dust.common.blocks.BlockCompressorTierTwo;
+import xavier.just_dust.common.blocks.machines.BlockCompressorTierTwo;
 import xavier.just_dust.common.containers.ContainerCompressor;
 import xavier.just_dust.common.slots.SlotCompressorFuel;
 

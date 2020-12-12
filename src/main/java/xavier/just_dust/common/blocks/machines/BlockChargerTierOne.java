@@ -1,4 +1,4 @@
-package xavier.just_dust.common.blocks;
+package xavier.just_dust.common.blocks.machines;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -22,47 +22,86 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.JustDust;
 import xavier.just_dust.client.guis.GuiHandler;
+import xavier.just_dust.common.blocks.ModBlocks;
 import xavier.just_dust.common.creative_tabs.DustTabs;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierOne;
+import xavier.just_dust.common.tile_entities.TileEntityChargerTierOne;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockGrinderTierOne extends BlockContainer{
+public class BlockChargerTierOne extends BlockContainer {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool POWERED = PropertyBool.create("powered");
-    protected static String name;
+    protected String name;
     private static boolean keepInventory;
 
-    public BlockGrinderTierOne() {
+    public BlockChargerTierOne() {
         super(Material.IRON);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false));
-        setUnlocalizedName("grinder_tier_one");
-        setRegistryName("grinder_tier_one");
-        this.name = "grinder_tier_one";
+        setUnlocalizedName("charger_tier_one");
+        setRegistryName("charger_tier_one");
+        name = "charger_tier_one";
         setCreativeTab(DustTabs.MACHINE_CREATIVE_TAB);
     }
 
     @Nullable
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(ModBlocks.grinder_tier_one);
+        return Item.getItemFromBlock(ModBlocks.charger_tier_one);
     }
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityGrinderTierOne();
+        return new TileEntityChargerTierOne();
     }
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!worldIn.isRemote)
-            playerIn.openGui(JustDust.instance, GuiHandler.getGrinderTierOneGuiID(),worldIn, pos.getX(), pos.getY(), pos.getZ());
-        return true;
+        if (!worldIn.isRemote) {
+            playerIn.openGui(JustDust.instance, GuiHandler.getChargerTierOneID(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+            return true;
+        }
+        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
-    public TileEntityGrinderTierOne createTileEntity(World world, IBlockState state) {
-        return new TileEntityGrinderTierOne();
+    public TileEntityChargerTierOne createTileEntity(World world, IBlockState state) {
+        return new TileEntityChargerTierOne();
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        if (!keepInventory)
+        {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+            if (tileentity instanceof TileEntityChargerTierOne)
+            {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityChargerTierOne)tileentity);
+                worldIn.updateComparatorOutputLevel(pos, this);
+            }
+        }
+
+        super.breakBlock(worldIn, pos, state);
+    }
+
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
+    {
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+    }
+
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    {
+        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
+
+        if (stack.hasDisplayName())
+        {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+
+            if (tileentity instanceof TileEntityChargerTierOne)
+            {
+                ((TileEntityChargerTierOne)tileentity).setCustomInventoryName(stack.getDisplayName());
+            }
+        }
     }
 
     public static void setState(boolean active, World worldIn, BlockPos pos) {
@@ -70,8 +109,8 @@ public class BlockGrinderTierOne extends BlockContainer{
         TileEntity tileentity = worldIn.getTileEntity(pos);
         keepInventory = true;
 
-        worldIn.setBlockState(pos, ModBlocks.grinder_tier_one.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
-        worldIn.setBlockState(pos, ModBlocks.grinder_tier_one.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
+        worldIn.setBlockState(pos, ModBlocks.charger_tier_one.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
+        worldIn.setBlockState(pos, ModBlocks.charger_tier_one.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(POWERED,active), 3);
 
 
         keepInventory = false;
@@ -83,45 +122,11 @@ public class BlockGrinderTierOne extends BlockContainer{
     }
 
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (!keepInventory)
-        {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-
-            if (tileentity instanceof TileEntityGrinderTierOne)
-            {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityGrinderTierOne)tileentity);
-                worldIn.updateComparatorOutputLevel(pos, this);
-            }
-        }
-        super.breakBlock(worldIn, pos, state);
-    }
-
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-    }
-
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
-
-        if (stack.hasDisplayName())
-        {
-            TileEntity tileentity = worldIn.getTileEntity(pos);
-
-            if (tileentity instanceof TileEntityGrinderTierOne)
-            {
-                ((TileEntityGrinderTierOne)tileentity).setCustomInventoryName(stack.getDisplayName());
-            }
-        }
-    }
-
-    @Override
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {FACING, POWERED});
     }
+
     public IBlockState getStateFromMeta(int meta)
     {
         EnumFacing enumfacing = EnumFacing.getFront(meta);
@@ -134,16 +139,27 @@ public class BlockGrinderTierOne extends BlockContainer{
         return this.getDefaultState().withProperty(FACING, enumfacing);
     }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
     public int getMetaFromState(IBlockState state)
     {
         return ((EnumFacing)state.getValue(FACING)).getIndex();
     }
 
+    /**
+     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
+     * blockstate.
+     */
     public IBlockState withRotation(IBlockState state, Rotation rot)
     {
         return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
     }
 
+    /**
+     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
+     * blockstate.
+     */
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
     {
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));

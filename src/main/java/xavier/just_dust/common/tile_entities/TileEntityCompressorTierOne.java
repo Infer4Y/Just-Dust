@@ -1,6 +1,5 @@
 package xavier.just_dust.common.tile_entities;
 
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -9,7 +8,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.*;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
@@ -19,12 +17,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.api.energy.MachineFuel;
-import xavier.just_dust.common.blocks.BlockCompressorTierOne;
+import xavier.just_dust.common.blocks.machines.BlockCompressorTierOne;
 import xavier.just_dust.common.containers.ContainerCompressor;
 import xavier.just_dust.api.recipes.CompressorRecipes;
 import xavier.just_dust.common.slots.SlotCompressorFuel;
-
-import javax.annotation.Nullable;
 
 public class TileEntityCompressorTierOne extends TileEntityLockable implements ITickable, ISidedInventory {
     private static final int[] SLOTS_TOP = new int[] {0};

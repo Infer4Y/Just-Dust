@@ -13,11 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.JustDust;
 import xavier.just_dust.client.guis.GuiHandler;
-import xavier.just_dust.common.tile_entities.TESRCompressorTierOne;
-import xavier.just_dust.common.tile_entities.TESRGrinderTierOne;
-import xavier.just_dust.common.tile_entities.TileEntityCompressorTierOne;
+import xavier.just_dust.common.tile_entities.*;
 import xavier.just_dust.common.CommonProxy;
-import xavier.just_dust.common.tile_entities.TileEntityGrinderTierOne;
 
 import static xavier.just_dust.JustDust.MODID;
 
@@ -49,5 +46,8 @@ public class ClientProxy extends CommonProxy {
     public void registerRenderers() {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompressorTierOne.class, new TESRCompressorTierOne());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGrinderTierOne.class, new TESRGrinderTierOne());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChargerTierOne.class, new TESRChargerTierOne());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCompressorTierTwo.class, new TESRCompressorTierTwo());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGrinderTierTwo.class, new TESRGrinderTierTwo());
     }
 }

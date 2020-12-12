@@ -1,0 +1,16 @@
+{
+  "parent": "just_dust:item/cells/cell_base",
+  "textures": {
+    "energy_cell_empty": "just_dust:items/cells/energy_cell_powered"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "just_dust:empty": 1
+      },
+      "textures": {
+        "energy_cell_empty": "just_dust:items/cells/energy_cell_empty"
+      }
+    }
+  ]
+}

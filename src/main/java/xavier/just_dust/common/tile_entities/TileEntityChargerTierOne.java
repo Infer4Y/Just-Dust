@@ -15,17 +15,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import xavier.just_dust.api.energy.MachineFuel;
 import xavier.just_dust.api.recipes.ChargingRecipes;
-import xavier.just_dust.api.recipes.CompressorRecipes;
-import xavier.just_dust.common.blocks.BlockChargerTierOne;
-import xavier.just_dust.common.blocks.BlockCompressorTierOne;
+import xavier.just_dust.common.blocks.machines.BlockChargerTierOne;
 import xavier.just_dust.common.containers.ContainerCharger;
-import xavier.just_dust.common.containers.ContainerCompressor;
+import xavier.just_dust.common.items.energy.BaseEnergyItem;
 import xavier.just_dust.common.slots.SlotChargerFuel;
-import xavier.just_dust.common.slots.SlotCompressorFuel;
 
 public class TileEntityChargerTierOne extends TileEntityLockable implements ITickable, ISidedInventory {
     private static final int[] SLOTS_TOP = new int[] {0};
@@ -194,15 +192,17 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
         }
     }
 
-    public int getCookTime(ItemStack stack) {
-        return Math.round(ChargingRecipes.instance().getChargingTime(stack) * 1.5f);
+    public int getCookTime(ItemStack itemStack) {
+        int time = 0;
+
+        return time;
     }
 
     private boolean canCharge() {
         if (((ItemStack)this.chargerItemStacks.get(0)).isEmpty()) {
             return false;
         } else {
-            ItemStack itemstack = ChargingRecipes.instance().getChargingResult(this.chargerItemStacks.get(0));
+            ItemStack itemstack = this.chargerItemStacks.get(0);
 
             if (itemstack.isEmpty()) {
                 return false;
@@ -226,25 +226,34 @@ public class TileEntityChargerTierOne extends TileEntityLockable implements ITic
     public void chargerItem() {
         if (this.canCharge()) {
             ItemStack itemstack = this.chargerItemStacks.get(0);
-            ItemStack itemstack1 = ChargingRecipes.instance().getChargingResult(itemstack);
-            ItemStack itemstack2 = this.chargerItemStacks.get(2);
 
-            if (itemstack2.isEmpty()) {
-                this.chargerItemStacks.set(2, itemstack1.copy());
-            } else if (itemstack2.getItem() == itemstack1.getItem()) {
-                itemstack2.grow(itemstack1.getCount());
+            if(itemstack.getItem() instanceof IEnergyStorage){
+                ((IEnergyStorage) itemstack.getItem()).receiveEnergy(10, true);
+                if (this.chargerItemStacks.get(2).isEmpty()) {
+                    if (((IEnergyStorage) itemstack.getItem()).getMaxEnergyStored() == ((IEnergyStorage) itemstack.getItem()).getEnergyStored()) {
+
+                        ItemStack itemStack2 = this.chargerItemStacks.set(2, itemstack.copy());
+
+                        itemstack.shrink(1);
+                    }
+                }
             }
-
-            itemstack.shrink(1);
         }
     }
 
     public static int getItemRunTime(ItemStack stack){
+        if (stack.getItem() instanceof BaseEnergyItem){
+            return ((BaseEnergyItem) stack.getItem()).getEnergyStorage(stack).getEnergyStored();
+        }
+
         return MachineFuel.getEnergyOutput(stack);
     }
 
-    public static boolean isItemFuel(ItemStack stack)
-    {
+    public static boolean isItemFuel(ItemStack stack) {
+        if (stack.getItem() instanceof BaseEnergyItem){
+            return true;
+        }
+
         return getItemRunTime(stack) > 0;
     }
 

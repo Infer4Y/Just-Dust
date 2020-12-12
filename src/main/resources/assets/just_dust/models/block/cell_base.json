@@ -1,0 +1,77 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "basic_cell_empty": "just_dust:items/cell/basic_cell_empty"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 19, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.25, 0.25, 0.25 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "name": "Connector1",
+            "from": [ 7, 0, 7 ], 
+            "to": [ 9, 3, 9 ], 
+            "faces": {
+                "north": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ], "rotation": 180 },
+                "east": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ], "rotation": 180 },
+                "south": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ], "rotation": 180 },
+                "west": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ], "rotation": 180 },
+                "down": { "texture": "#basic_cell_empty", "uv": [ 0, 0, 2, 2 ] }
+            }
+        },
+        {
+            "name": "Connector2",
+            "from": [ 7, 10, 7 ], 
+            "to": [ 9, 13, 9 ], 
+            "faces": {
+                "north": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ] },
+                "east": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ] },
+                "south": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ] },
+                "west": { "texture": "#basic_cell_empty", "uv": [ 0, 2, 2, 5 ] },
+                "up": { "texture": "#basic_cell_empty", "uv": [ 0, 0, 2, 2 ] }
+            }
+        },
+        {
+            "name": "Body",
+            "from": [ 6, 3, 6 ], 
+            "to": [ 10, 10, 10 ], 
+            "faces": {
+                "north": { "texture": "#basic_cell_empty", "uv": [ 0, 5, 4, 12 ] },
+                "east": { "texture": "#basic_cell_empty", "uv": [ 0, 5, 4, 12 ] },
+                "south": { "texture": "#basic_cell_empty", "uv": [ 0, 5, 4, 12 ] },
+                "west": { "texture": "#basic_cell_empty", "uv": [ 0, 5, 4, 12 ] },
+                "up": { "texture": "#basic_cell_empty", "uv": [ 0, 12, 4, 16 ] },
+                "down": { "texture": "#basic_cell_empty", "uv": [ 0, 12, 4, 16 ] }
+            }
+        }
+    ]
+}

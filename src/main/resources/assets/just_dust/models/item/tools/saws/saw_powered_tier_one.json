@@ -1,9 +1,20 @@
 {
-  "parent": "just_dust:item/tools/saw_base",
+  "parent": "just_dust:item/tools/saw/saw_base",
   "textures": {
-    "blade_wheel0": "just_dust:items/parts/blade_wheel0",
+    "blade_wheel0": "just_dust:items/parts/blade_wheel_full",
     "death_dust_block": "minecraft:blocks/iron_block",
-    "energy_dust_block": "just_dust:blocks/energy_dust_block",
+    "energy_dust_block": "just_dust:blocks/life_dust_block",
     "fire_dust_block": "just_dust:blocks/fire_dust_block"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "just_dust:empty": 1
+      },
+      "textures": {
+        "blade_wheel0": "just_dust:items/parts/blade_wheel0",
+        "energy_dust_block": "just_dust:blocks/energy_dust_block"
+      }
+    }
+  ]
 }

@@ -20,6 +20,6 @@ public class ItemAxes extends ItemAxe implements ItemModelProvider {
     }
 
     public void registerItemModel() {
-        JustDust.proxy.registerItemRenderer(this, 0, name);
+        JustDust.proxy.registerItemRenderer(this, 0, "tools/axes/"+name);
     }
 }

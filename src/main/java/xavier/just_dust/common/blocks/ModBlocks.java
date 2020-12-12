@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.IForgeRegistry;
+import xavier.just_dust.common.blocks.cables.BlockEnergyCable;
+import xavier.just_dust.common.blocks.machines.*;
 import xavier.just_dust.common.items.ModItems;
 
 public class ModBlocks {
@@ -33,6 +35,7 @@ public class ModBlocks {
                 death_dust_block = new BaseBlocks(Material.ROCK, "death_dust_block"),
                 energy_dust_block = new BaseBlocks(Material.ROCK, "energy_dust_block"),
                 compressor_tier_one = new BlockCompressorTierOne(),
+                charger_tier_one = new BlockChargerTierOne(),
                 grinder_tier_one = new BlockGrinderTierOne(),
                 compressor_tier_two = new BlockCompressorTierTwo(),
                 grinder_tier_two = new BlockGrinderTierTwo(),
@@ -59,6 +62,7 @@ public class ModBlocks {
                 energy_dust_block.createItemBlock(),
                 compressor_tier_one.createItemBlock(),
                 grinder_tier_one.createItemBlock(),
+                charger_tier_one.createItemBlock(),
                 compressor_tier_two.createItemBlock(),
                 grinder_tier_two.createItemBlock(),
                 cable_energy_tier_one.createItemBlock(),
@@ -82,6 +86,7 @@ public class ModBlocks {
         death_dust_block.registerItemModel(Item.getItemFromBlock(death_dust_block));
         energy_dust_block.registerItemModel(Item.getItemFromBlock(energy_dust_block));
         compressor_tier_one.registerItemModel(Item.getItemFromBlock(compressor_tier_one));
+        charger_tier_one.registerItemModel(Item.getItemFromBlock(charger_tier_one));
         grinder_tier_one.registerItemModel(Item.getItemFromBlock(grinder_tier_one));
         compressor_tier_two.registerItemModel(Item.getItemFromBlock(compressor_tier_two));
         grinder_tier_two.registerItemModel(Item.getItemFromBlock(grinder_tier_two));

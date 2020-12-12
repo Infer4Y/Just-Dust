@@ -1,4 +1,4 @@
-package xavier.just_dust.common.blocks;
+package xavier.just_dust.common.blocks.cables;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,6 +13,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import xavier.just_dust.common.blocks.machines.BlockCompressorTierOne;
+import xavier.just_dust.common.blocks.machines.BlockGrinderTierOne;
 
 public class BlockEnergyCable extends BlockCableBase {
     public BlockEnergyCable(String blockName) {

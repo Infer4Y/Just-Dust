@@ -1,0 +1,145 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "textures": {
+        "earth_dust_block": "just_dust:blocks/earth_dust_block",
+        "death_dust_block": "just_dust:blocks/death_dust_block",
+        "energy_dust_block": "just_dust:blocks/energy_dust_block",
+        "fire_dust_block": "just_dust:blocks/fire_dust_block"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 45, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 90, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        },
+        "fixed": {
+            "rotation": [ 45, 90, 0 ],
+            "translation": [ 8, -8, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, -3, 0 ],
+            "scale": [ 3, 2, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 360, 353 ],
+            "translation": [ 1, 2.5, 2 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 0, 360, 0 ],
+            "translation": [ 0, 0.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.5 ]
+        }
+    },
+    "elements": [
+        {
+            "name": "Housing",
+            "from": [ 6, 6, 0 ], 
+            "to": [ 10, 10, 8 ], 
+            "faces": {
+                "north": { "texture": "#energy_dust_block", "uv": [ 6, 6, 10, 10 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 13, 15 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 1, 11, 5, 15 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 12, 15 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 3, 5, 11 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 5, 11 ] }
+            }
+        },
+        {
+            "name": "Indicator",
+            "from": [ 7, 11, 3 ], 
+            "to": [ 9, 14, 11 ], 
+            "rotation": { "origin": [ 8, 8, 8 ], "axis": "x", "angle": -45.0 },
+            "faces": {
+                "north": { "texture": "#death_dust_block", "uv": [ 6, 6, 8, 9 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 13, 14 ] },
+                "south": { "texture": "#energy_dust_block", "uv": [ 1, 11, 3, 14 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 12, 14 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 3, 3, 11 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 3, 11 ] }
+            }
+        },
+        {
+            "name": "Handel",
+            "from": [ 6.5, 6, 6 ], 
+            "to": [ 9.5, 10, 14 ], 
+            "rotation": { "origin": [ 8, 8, 8 ], "axis": "x", "angle": 45.0 },
+            "faces": {
+                "north": { "texture": "#fire_dust_block", "uv": [ 6, 6, 9, 10 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 13, 15 ] },
+                "south": { "texture": "#fire_dust_block", "uv": [ 6, 6, 9, 10 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 12, 15 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 3, 4, 11 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 4, 11 ] }
+            }
+        },
+        {
+            "name": "Housing",
+            "from": [ 5.5, 6.5, 1 ], 
+            "to": [ 10.5, 9.5, 7 ], 
+            "faces": {
+                "north": { "texture": "#energy_dust_block", "uv": [ 6, 6, 11, 9 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 11, 14 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 1, 11, 6, 14 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 10, 14 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 3, 6, 9 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 6, 9 ] }
+            }
+        },
+        {
+            "name": "Housing",
+            "from": [ 6.5, 5.5, 1 ], 
+            "to": [ 9.5, 8.5, 7 ], 
+            "faces": {
+                "north": { "texture": "#energy_dust_block", "uv": [ 6, 6, 9, 9 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 11, 14 ] },
+                "south": { "texture": "#death_dust_block", "uv": [ 1, 11, 4, 14 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 10, 14 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 4, 9 ] }
+            }
+        },
+        {
+            "name": "Barrel",
+            "from": [ 6.5, 6.5, -11 ], 
+            "to": [ 9.5, 8.5, 0 ], 
+            "faces": {
+                "north": { "texture": "#earth_dust_block", "uv": [ 6, 14, 9, 16 ] },
+                "east": { "texture": "#earth_dust_block", "uv": [ 4, 14, 15, 16 ] },
+                "west": { "texture": "#earth_dust_block", "uv": [ 4, 14, 15, 16 ] },
+                "up": { "texture": "#earth_dust_block", "uv": [ 12, 5, 15, 16 ] },
+                "down": { "texture": "#earth_dust_block", "uv": [ 12, 4, 15, 15 ] }
+            }
+        },
+        {
+            "name": "Barrel",
+            "from": [ 6, 8.5, -13 ], 
+            "to": [ 7.5, 10, 0 ], 
+            "faces": {
+                "north": { "texture": "#death_dust_block", "uv": [ 0, 14, 1.5, 15.5 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 16, 12.5 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 16, 12.5 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 3, 2.5, 16 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 2.5, 16 ] }
+            }
+        },
+        {
+            "name": "Barrel",
+            "from": [ 8.5, 8.5, -13 ], 
+            "to": [ 10, 10, 0 ], 
+            "faces": {
+                "north": { "texture": "#death_dust_block", "uv": [ 0, 14, 1.5, 15.5 ] },
+                "east": { "texture": "#death_dust_block", "uv": [ 5, 11, 16, 12.5 ] },
+                "west": { "texture": "#death_dust_block", "uv": [ 4, 11, 16, 12.5 ] },
+                "up": { "texture": "#death_dust_block", "uv": [ 1, 3, 2.5, 16 ] },
+                "down": { "texture": "#death_dust_block", "uv": [ 1, 3, 2.5, 16 ] }
+            }
+        }
+    ]
+}
